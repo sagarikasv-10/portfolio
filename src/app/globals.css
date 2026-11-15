@@ -601,6 +601,9 @@ html[data-theme="magic"] .magic-btn::after { display: none; }
 /* magic toggle: full label from 640px, compact label on phones (so the whole top bar fits on one row) */
 .mg-short { display: none; }
 
-/* mobile bottom navigation: flush to the viewport bottom, opaque, safe-area aware (iOS Safari toolbar) */
-.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #f5efe6; padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); }
+/* mobile bottom navigation: fixed flush to the bottom, opaque, safe-area aware. The ::after "skirt" extends the same
+   background 120px below the bar so nothing can show through under iOS Safari's floating address-bar pill. */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: #f3ece1; padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); }
+.bottom-nav::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 120px; background: inherit; pointer-events: none; }
 html[data-theme="magic"] .bottom-nav { background: #0f172e; }
+@media (min-width: 1024px) { .bottom-nav::after { display: none; } }

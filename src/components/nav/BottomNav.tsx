@@ -4,7 +4,7 @@ import { NavLink } from "./NavLink";
 /** Mobile/tablet: fixed bottom bar, all six items in six equal columns. */
 export function BottomNav() {
   return (
-    <nav aria-label="Primary" className="bottom-nav fixed inset-x-0 bottom-0 left-0 right-0 z-40 border-t border-ink/70 lg:hidden">
+    <nav aria-label="Primary" className="bottom-nav fixed inset-x-0 bottom-0 left-0 right-0 z-50 border-t border-ink/70 lg:hidden">
       <ul className="mx-auto grid max-w-[640px] grid-cols-6" style={{ height: "var(--bottom-nav-h)" }}>
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
