@@ -1,0 +1,599 @@
+@import "@fontsource-variable/fraunces/full.css";
+@import "@fontsource-variable/fraunces/full-italic.css";
+@import "@fontsource-variable/inter/index.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #f4efe6;
+  --paper-rgb: 244 239 230;
+  --ink: #2a2420;
+  --ink-rgb: 42 36 32;
+  --ochre: #c8932e;
+  --olive: #6f7b3c;
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --bottom-nav-h: 64px;
+}
+
+html { background: var(--paper); -webkit-text-size-adjust: 100%; scroll-behavior: smooth; transition: background-color 0.7s ease; }
+body {
+  margin: 0;
+  color: rgb(var(--ink-rgb));
+  background: transparent;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Warm paper grain over the whole page (static, cheap). */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35  0 0 0 0 0.26  0 0 0 0 0.16  0 0 0 0.7 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+}
+
+/* Magic Mode night sky: fades in beneath the content */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at 50% 20%, #162447 0%, #0B132B 70%);
+  transition: opacity 0.7s ease;
+}
+
+.display { font-family: var(--font-display); font-variation-settings: "SOFT" 30, "WONK" 0, "opsz" 36; font-variant-numeric: lining-nums; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+/* ---------- Quiet ambient motion (only what a living drawing needs) ---------- */
+.anim { transform-box: fill-box; }
+@keyframes sway-small { 0%,100% { transform: rotate(-2.5deg); } 50% { transform: rotate(3deg); } }
+@keyframes sway { 0%,100% { transform: rotate(-0.6deg); } 50% { transform: rotate(0.7deg); } }
+@keyframes tail { 0%,100% { transform: rotate(-6deg); } 50% { transform: rotate(8deg); } }
+@keyframes wag { 0%,88%,100% { transform: rotate(0deg); } 92% { transform: rotate(14deg); } 96% { transform: rotate(-10deg); } }
+@keyframes blink { 0%,94%,100% { transform: scaleY(1); } 97% { transform: scaleY(0.08); } }
+@keyframes breathe { 0%,100% { transform: scale(1,1); } 50% { transform: scale(1.01,1.025); } }
+@keyframes typeL { 0%,100% { transform: translateY(0); } 30% { transform: translateY(2px); } 65% { transform: translateY(1px);} }
+@keyframes typeR { 0%,100% { transform: translateY(1px); } 35% { transform: translateY(0); } 70% { transform: translateY(2px);} }
+
+.sway { animation: sway 12s ease-in-out infinite; transform-origin: 50% 100%; }
+.sway-b { animation: sway 15s ease-in-out -5s infinite; transform-origin: 50% 100%; }
+.sway-s { animation: sway-small 7s ease-in-out infinite; transform-origin: 50% 100%; }
+.tail { animation: tail 5s ease-in-out infinite; transform-origin: 0% 100%; }
+.tail-slow { animation: tail 8s ease-in-out -2s infinite; transform-origin: 0% 100%; }
+.wag { animation: wag 8s ease-in-out infinite; transform-origin: 0% 100%; }
+.wag-b { animation: wag 10s ease-in-out -3s infinite; transform-origin: 0% 100%; }
+.blink { animation: blink 7s infinite; transform-origin: 50% 50%; }
+.blink-b { animation: blink 8s -2s infinite; transform-origin: 50% 50%; }
+.breathe { animation: breathe 5.5s ease-in-out infinite; transform-origin: 50% 100%; }
+.type-l { animation: typeL 1.5s ease-in-out infinite; }
+.type-r { animation: typeR 1.8s ease-in-out infinite; }
+.foot { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sway,.sway-b,.sway-s,.tail,.tail-slow,.wag,.wag-b,.blink,.blink-b,.breathe,.type-l,.type-r { animation: none !important; }
+  html { scroll-behavior: auto !important; }
+}
+
+/* ---------- Hero painting + ambient effects ---------- */
+/* .art-frame is the painting's box. It reproduces `object-fit: cover` (with an object-position) in CSS, so the
+   effects layer, which is positioned in % of this box, stays glued to the picture at any crop. */
+.art { container-type: size; --ox: 0.74; --oy: 0.5; }
+@media (min-width: 900px) { .art { --ox: 0.5; --oy: 0.48; } }
+.art-frame {
+  --w: max(100cqw, calc(100cqh * 1.7768));
+  position: absolute;
+  width: var(--w);
+  aspect-ratio: 1672 / 941;
+  left: calc((100cqw - var(--w)) * var(--ox));
+  top: calc((100cqh - var(--w) * 0.5628) * var(--oy));
+  container-type: size;
+}
+.art-img { display: block; width: 100%; height: 100%; max-width: none; user-select: none; }
+.fx { position: absolute; inset: 0; overflow: hidden; pointer-events: none; contain: layout paint; }
+
+/* 1. breathing glow by the laptop (opacity + scale only) */
+.laptop-glow {
+  position: absolute; left: 54.2%; top: 43.4%; width: 20.6%; height: 23.6%;
+  background: radial-gradient(ellipse at center, rgba(255, 238, 176, 0.62) 0%, rgba(255, 224, 140, 0.26) 42%, rgba(255, 224, 140, 0) 72%);
+  opacity: 0.3;
+  animation: glow-breathe 8s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+@keyframes glow-breathe { 0%, 100% { opacity: 0.22; transform: scale(0.95); } 50% { opacity: 0.78; transform: scale(1.06); } }
+
+/* 2. golden pollen drifting up through the meadow */
+.pollen {
+  position: absolute; width: var(--s); height: var(--s); border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle, rgba(255, 244, 192, 0.95) 0%, rgba(255, 214, 110, 0.7) 38%, rgba(255, 200, 90, 0) 72%);
+  animation: pollen-drift var(--dur) ease-in-out infinite; animation-delay: var(--delay);
+  will-change: transform, opacity;
+}
+@keyframes pollen-drift {
+  0% { opacity: 0; transform: translate3d(0, 0, 0); }
+  15% { opacity: 0.85; }
+  50% { transform: translate3d(calc(var(--dx) * 0.35), calc(var(--dy) * 0.5), 0); }
+  85% { opacity: 0.8; }
+  100% { opacity: 0; transform: translate3d(var(--dx), var(--dy), 0); }
+}
+
+@media (max-width: 639px) {
+  .pollen:nth-child(n + 12) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pollen { display: none; }
+  .art-video { display: none; }
+  .laptop-glow { animation: none; opacity: 0.25; }
+}
+/* very old browsers without container query units: plain cover image, no effects */
+@supports not (width: 1cqw) {
+  .art-frame { inset: 0; width: 100%; height: 100%; aspect-ratio: auto; }
+  .art-img { object-fit: cover; object-position: 74% 50%; }
+  .fx { display: none; }
+}
+
+/* ---------- Hero video, sound toggle ---------- */
+.art-video {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 1.4s ease; pointer-events: none;
+}
+.art-video.is-ready { opacity: 1; }
+
+.sound-btn {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 9999px; cursor: pointer;
+  color: #5E6B33; background: rgba(244, 239, 230, 0.92);
+  border: 1.5px solid #9AA78A;
+  box-shadow: 0 2px 10px rgba(74, 90, 45, 0.16);
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+}
+.sound-btn:hover { background: #E7EBD9; transform: scale(1.05); }
+.sound-btn.is-on { background: #A9B995; color: #2F3B1C; border-color: #7E9266; }
+.sound-note { position: absolute; left: 0; top: 100%; margin-top: 6px; white-space: nowrap;
+  font-size: 0.7rem; letter-spacing: 0.02em; color: #4A4F2E; background: rgba(244, 239, 230, 0.95);
+  border: 1px solid #9AA78A; border-radius: 9999px; padding: 4px 10px;
+  opacity: 0; transform: translateY(4px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none;
+}
+.sound-note.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .art-video { display: none; }
+  .sound-btn, .sound-note { transition: none; }
+}
+
+/* ---------- Signature line: twinkling stars + slow light sweep ---------- */
+.star {
+  display: inline-block; font-style: normal; font-size: 0.7em; vertical-align: 0.08em;
+  background-image: linear-gradient(135deg, #7C3AED, #C026D3, #DB2777);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: twinkle 3.5s ease-in-out infinite;
+}
+.star-end { animation-delay: 1.7s; animation-fill-mode: backwards; }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.45; transform: scale(0.9) rotate(-8deg); }
+  50% { opacity: 1; transform: scale(1.12) rotate(8deg); }
+}
+.magic-shimmer {
+  font-weight: 500;
+  color: #6B21A8;
+  background-image: linear-gradient(90deg, #6B21A8, #A21CAF, #DB2777, #7C3AED, #6B21A8);
+  background-size: 250% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: magic-sweep 6s linear infinite;
+}
+@keyframes magic-sweep { 0% { background-position: 0% center; } 100% { background-position: 250% center; } }
+@media (prefers-reduced-motion: reduce) {
+  .star { animation: none; opacity: 0.9; }
+  .magic-shimmer { animation: none; background-position: 0% center; }
+}
+
+/* ---------- Primary CTA: calm halo, arrow drift, tactile hover ---------- */
+.cta {
+  position: relative; overflow: hidden; isolation: isolate;
+  display: inline-flex; min-height: 3rem; align-items: center; justify-content: center; gap: 0.75rem;
+  padding: 0.75rem 1.75rem; border-radius: 4px;
+  background: #2a2420; color: #f4efe6;
+  font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  box-shadow: 0 2px 6px rgba(42, 36, 32, 0.18);
+  transition: transform 0.35s ease, background-color 0.35s ease, box-shadow 0.35s ease;
+  animation: cta-halo 4s ease-in-out infinite;
+}
+@keyframes cta-halo {
+  0%, 100% { box-shadow: 0 2px 6px rgba(42, 36, 32, 0.18), 0 0 0 0 rgba(180, 138, 62, 0.32); }
+  60% { box-shadow: 0 2px 6px rgba(42, 36, 32, 0.18), 0 0 0 8px rgba(180, 138, 62, 0); }
+}
+.cta-arrow { display: inline-block; animation: cta-nudge 2.8s ease-in-out infinite; transition: transform 0.35s ease; }
+@keyframes cta-nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+
+/* light sheen, only on hover */
+.cta::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 244, 214, 0.28) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.cta:hover, .cta:focus-visible {
+  transform: translateY(-2px);
+  background: #3b2f23;
+  box-shadow: 0 10px 22px rgba(42, 36, 32, 0.3), 0 0 0 1px rgba(180, 138, 62, 0.4);
+  animation: none;
+}
+.cta:hover .cta-arrow, .cta:focus-visible .cta-arrow { animation: none; transform: translateX(6px); }
+.cta:hover::after, .cta:focus-visible::after { transform: translateX(120%); transition: transform 0.7s ease; }
+.cta:active { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .cta, .cta-arrow { animation: none; }
+  .cta:hover::after, .cta:focus-visible::after { transition: none; transform: translateX(-120%); }
+}
+
+/* ---------- Kind Words: envelopes + marquee ----------
+   Open/closed is driven by the React class .is-open (hover on desktop, tap on touch), never by CSS :hover.
+   Stacking inside one envelope (its own stacking context). The rules WITHOUT .is-open are the CLOSING timings,
+   the .is-open rules are the OPENING timings (a CSS transition uses the target state's timing).
+     CLOSED   flap 20 (seal rides on it, z 30 inside the flap) | body 8 | letter 5 (hidden inside) | stamp 26 | pocket 30
+     OPENING  flap swings; once past 90deg (0.3s) it drops to 10 and the letter rises to 30
+     CLOSING  letter slides fully back (0.6s) and only then drops to 5; the flap stays at 10 until it is back past 90deg
+              (0.8s), then returns to 20, so neither flap nor seal ever pops over a retreating letter
+   The open envelope itself rises to z 40 so neighbours never cover its letter. */
+.env { perspective: 900px; cursor: pointer; outline-offset: 6px; position: relative; z-index: 0; -webkit-tap-highlight-color: transparent; }
+.env.is-open { z-index: 40; }
+.env-face {
+  position: absolute; inset: 0; z-index: 8; border-radius: 12px;
+  background: linear-gradient(160deg, #EFE2C6 0%, #E6D3AE 100%);
+  border: 1px solid rgba(140, 109, 63, 0.3);
+  box-shadow: 0 10px 22px rgba(92, 73, 40, 0.18), 0 2px 4px rgba(92, 73, 40, 0.12);
+}
+.env-pocket {
+  position: absolute; left: 1px; right: 1px; bottom: 1px; height: 64px; z-index: 30; border-radius: 0 0 11px 11px;
+  background: linear-gradient(160deg, #EFE2C6 0%, #E6D3AE 100%) bottom / 100% 250px no-repeat;
+  transition: box-shadow 0.4s ease;
+}
+@media (max-width: 639px) { .env-pocket { height: 58px; background-size: 100% 232px; } }
+.env.is-open .env-pocket { box-shadow: 0 -4px 8px rgba(92, 73, 40, 0.12); }
+.env-stamp { z-index: 26; transition: z-index 0s linear 0.8s; }
+.env.is-open .env-stamp { z-index: 9; transition-delay: 0.25s; }
+
+/* the letter sits inside the envelope (behind the body) until opened; the clip only hides what would hang below it */
+.letter-clip { position: absolute; inset: 0; z-index: 5; clip-path: inset(-600px -30px 0 -30px); transition: z-index 0s linear 0.6s; }
+.env.is-open .letter-clip { z-index: 30; transition-delay: 0.25s; }
+.letter {
+  position: absolute; left: 16px; right: 16px; top: 16px;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  filter: drop-shadow(0 6px 10px rgba(92, 73, 40, 0.25));
+}
+.env.is-open .letter { transform: translateY(-96px); transition: transform 0.7s cubic-bezier(0.22, 0.8, 0.28, 1) 0.15s; }
+.letter-paper { background: #FAF6EE; }
+
+/* flap: opacity lives on the faces (opacity on the 3D parent would flatten it and show the wrong side) */
+.flap {
+  position: absolute; left: 0; top: 0; width: 100%; height: 50%; z-index: 20;
+  transform-origin: top center; transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s, z-index 0s linear 0.8s;
+}
+.flap-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: opacity 0.25s ease 0.5s; }
+.flap-front { filter: drop-shadow(0 3px 3px rgba(92, 73, 40, 0.3)); }
+.flap-back { transform: rotateX(180deg); }
+.flap-tri { position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); border-top-left-radius: 12px; border-top-right-radius: 12px; }
+.flap-tri-front { background: linear-gradient(180deg, #E8D7B3 0%, #DDC79B 100%); }
+.flap-tri-back { background: linear-gradient(0deg, #D3BC8C 0%, #C9B07C 100%); }
+.flap-seal {
+  position: absolute; left: 50%; top: 100%; z-index: 30; transform: translate(-50%, -50%);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: opacity 0.25s ease 0.8s;
+}
+.env.is-open .flap { transform: rotateX(180deg) scaleY(0.62); z-index: 10; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0s, z-index 0s linear 0.25s; }
+.env.is-open .flap-face { opacity: 0.2; transition: opacity 0.3s ease 0.3s; }
+.env.is-open .flap-seal { opacity: 0; transition: opacity 0.2s ease 0s; }
+
+/* pause the drift while any envelope is open */
+.marquee-track:has(.env.is-open) { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .marquee-dup { display: none; }
+  .marquee-wrap { overflow-x: auto; }
+  .flap, .flap-face, .letter, .letter-clip, .flap-seal, .env-pocket { transition: none; }
+}
+
+/* ---------- Work Experience timeline ---------- */
+.exp-scroller {
+  --exp-pad: max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem));
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: var(--exp-pad);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-bottom: 1.5rem;
+}
+.exp-scroller::-webkit-scrollbar { display: none; }
+.exp-track { position: relative; display: flex; gap: 2rem; width: max-content; padding: 0 var(--exp-pad); align-items: stretch; }
+.exp-item { scroll-snap-align: start; }
+.exp-line { position: absolute; top: 13px; height: 2px; background: rgba(122, 92, 50, 0.25); border-radius: 2px; }
+.exp-fill { position: absolute; inset: 0; transform-origin: left center; transform: scaleX(0); background: #B48A3E; border-radius: 2px; }
+.exp-node { transition: opacity 0.4s ease, transform 0.4s ease; }
+.exp-node[data-reached="false"] { opacity: 0.45; transform: scale(0.85); }
+@media (min-width: 1024px) {
+  .exp-scroller { --exp-pad: calc(4rem + max(0px, (100vw - 4rem - 80rem) / 2) + 3rem); }
+}
+/* scroll-linked mode: the outer wrapper is tall, the row is pinned, vertical scroll moves the track sideways */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .exp-outer { height: 165vh; }
+  .exp-sticky { position: sticky; top: 6rem; overflow: hidden; }
+  .exp-scroller { overflow: hidden; scroll-snap-type: none; }
+  .exp-item { scroll-snap-align: none; }
+  .exp-track { will-change: transform; }
+}
+@media (prefers-reduced-motion: reduce) { .exp-node { transition: none; } }
+
+/* ---------- Nav: the active underline glides in ---------- */
+.nav-underline { transform: scaleX(0); transform-origin: left center; transition: transform 0.35s ease; }
+[aria-current="page"] > .nav-underline { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .nav-underline { transition: none; } }
+
+/* =====================================================================================================
+   MAGIC MODE  —  <html data-theme="magic">
+   Midnight navy #0B132B, antique gold #F3C669, moonlight cream #EAE4D7, mist #A9B4CC, indigo cards #111C3A.
+   Layout, sizes and spacing are untouched: only colours change. The component classes keep their daylight
+   colours; this block re-maps them (exact class tokens via [class~=], so nothing else is caught).
+   ===================================================================================================== */
+html[data-theme="magic"] {
+  --paper: #0b132b; --paper-rgb: 11 19 43; --ink: #eae4d7; --ink-rgb: 234 228 215; color-scheme: dark;
+}
+html[data-theme="magic"] body::before { opacity: 1; }
+html[data-theme="magic"] body::after { opacity: 0.08; }
+html[data-theme="magic"] section.bg-paper, html[data-theme="magic"] footer.bg-paper { background-color: transparent; }
+section.bg-paper, footer.bg-paper { transition: background-color 0.7s ease; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.7s; }
+
+/* ----- type ----- */
+html[data-theme="magic"] h1[class], html[data-theme="magic"] h2[class], html[data-theme="magic"] h3[class],
+html[data-theme="magic"] .gold-display, html[data-theme="magic"] .metric-value,
+html[data-theme="magic"] .text-ochre { color: #f3c669; }
+html[data-theme="magic"] [class~="text-[#1A1A1A]"], html[data-theme="magic"] [class~="text-[#1A1A1A]/80"], html[data-theme="magic"] [class~="text-[#1A1A1A]/85"] { color: #eae4d7; }
+html[data-theme="magic"] [class~="text-[#1A1A1A]/75"], html[data-theme="magic"] [class~="text-[#1A1A1A]/70"], html[data-theme="magic"] [class~="text-[#1A1A1A]/50"] { color: #a9b4cc; }
+html[data-theme="magic"] [class~="text-[#5C4928]"], html[data-theme="magic"] [class~="text-[#8C581A]"] { color: #f3c669; }
+html[data-theme="magic"] [class~="text-[#5C4928]/80"] { color: #a9b4cc; }
+html[data-theme="magic"] [class~="text-[#F4EFE6]"] { color: #0b132b; }
+html[data-theme="magic"] .thumb [class~="text-[#F4EFE6]"] { color: #f4efe6; }
+
+/* ----- surfaces: cards, timeline, About, envelopes ----- */
+html[data-theme="magic"] [class~="bg-[#F2E6D0]"] { background-color: #111c3a; }
+html[data-theme="magic"] [class*="from-[#F4E9D5]"] { --tw-gradient-from: #14204a; --tw-gradient-to: #0f1a3a; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to); }
+html[data-theme="magic"] path[fill="#F4E9D5"] { fill: #14204a; }
+html[data-theme="magic"] [class~="bg-[#EFE4CE]"], html[data-theme="magic"] [class~="bg-[#EFE4CE]/70"] { background-color: rgba(212, 168, 83, 0.14); }
+html[data-theme="magic"] [class~="hover:bg-[#EFE4CE]/60"]:hover { background-color: rgba(212, 168, 83, 0.16); }
+html[data-theme="magic"] [class~="hover:border-[#8C6D3F]"]:hover { border-color: #d4a853; }
+html[data-theme="magic"] [class~="bg-[#F4EFE6]"] { background-color: #0d1631; }
+html[data-theme="magic"] [class~="ring-[#F4EFE6]"] { --tw-ring-color: #0d1631; }
+html[data-theme="magic"] .exp-line { background: rgba(212, 168, 83, 0.25); }
+html[data-theme="magic"] [class*="border-[#7A5C32]"] { border-color: rgba(212, 168, 83, 0.35); }
+html[data-theme="magic"] [class*="border-[#7A5C32]/["] { border-color: rgba(212, 168, 83, 0.2); }
+html[data-theme="magic"] [class*="border-[#8C6D3F]"] { border-color: rgba(212, 168, 83, 0.32); }
+html[data-theme="magic"] [class*="border-[#1A1A1A]"] { border-color: rgba(234, 228, 215, 0.2); }
+html[data-theme="magic"] [class~="bg-[#7A5C32]/40"] { background-color: rgba(212, 168, 83, 0.4); }
+html[data-theme="magic"] [class~="bg-[#9E5B3C]"] { background-color: #d4a853; color: #0b132b; }
+html[data-theme="magic"] .thumb [class~="bg-[#9E5B3C]"] { background-color: #9e5b3c; color: #fff; }
+html[data-theme="magic"] article[class*="border-[#7A5C32]"] { box-shadow: 0 0 25px rgba(212, 168, 83, 0.08); }
+html[data-theme="magic"] article[class*="border-[#7A5C32]"]:hover { box-shadow: 0 0 34px rgba(212, 168, 83, 0.16); }
+html[data-theme="magic"] [class*="inset_0_0_32px"] { box-shadow: inset 0 0 32px rgba(212, 168, 83, 0.1); }
+html[data-theme="magic"] .thumb { filter: brightness(0.82) saturate(0.9); }
+html[data-theme="magic"] .about-icon [stroke="#5C4928"] { stroke: #eccf8c; }
+html[data-theme="magic"] .about-icon [fill="#5C4928"] { fill: #eccf8c; }
+
+/* envelopes: indigo paper, gold edges, golden wax seal */
+html[data-theme="magic"] .env-face { background: linear-gradient(160deg, #16224a 0%, #0f1a3a 100%); border-color: rgba(212, 168, 83, 0.4); box-shadow: 0 0 25px rgba(212, 168, 83, 0.08), 0 10px 22px rgba(0, 0, 0, 0.35); }
+html[data-theme="magic"] .env-pocket { background: linear-gradient(160deg, #16224a 0%, #0f1a3a 100%) bottom / 100% 250px no-repeat; }
+@media (max-width: 639px) { html[data-theme="magic"] .env-pocket { background-size: 100% 232px; } }
+html[data-theme="magic"] .env-face path[stroke="#8C6D3F"] { stroke: #d4a853; }
+html[data-theme="magic"] .flap-tri-front { background: linear-gradient(180deg, #1c2b5e 0%, #14204a 100%); }
+html[data-theme="magic"] .flap-tri-back { background: linear-gradient(0deg, #101b3f 0%, #0d1633 100%); }
+html[data-theme="magic"] .letter-paper { background: #16224a; }
+html[data-theme="magic"] .letter { filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.45)); }
+html[data-theme="magic"] stop[stop-color="#FAF6EE"] { stop-color: #16224a; }
+html[data-theme="magic"] path[fill="#9E4735"] { fill: #d4a853; }
+html[data-theme="magic"] circle[stroke="#7E3428"] { stroke: #8a6a24; }
+html[data-theme="magic"] path[fill="#7E3428"] { fill: #8a6a24; }
+html[data-theme="magic"] circle[stroke="#C5705A"] { stroke: #f3c669; }
+html[data-theme="magic"] svg path[stroke="#5C4928"] { stroke: #d4a853; }
+html[data-theme="magic"] .env-stamp { filter: brightness(0.85); }
+
+/* ----- controls ----- */
+html[data-theme="magic"] [class~="bg-[#1A1A1A]"] { background-color: #f3c669; }
+html[data-theme="magic"] [class~="bg-[#1A1A1A]"]:hover { background-color: #ffd98a; }
+html[data-theme="magic"] .cta { background: #f3c669; color: #0b132b; animation-name: cta-halo-magic; }
+html[data-theme="magic"] .cta:hover, html[data-theme="magic"] .cta:focus-visible { background: #ffd98a; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(243, 198, 105, 0.5); }
+@keyframes cta-halo-magic {
+  0%, 100% { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(243, 198, 105, 0.4); }
+  60% { box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), 0 0 0 8px rgba(243, 198, 105, 0); }
+}
+html[data-theme="magic"] .nav-underline { background: #f3c669; }
+html[data-theme="magic"] nav.fixed.bottom-0 { border-color: rgba(212, 168, 83, 0.35); }
+html[data-theme="magic"] .rail { box-shadow: 0 0 25px rgba(212, 168, 83, 0.08), 0 6px 18px rgba(0, 0, 0, 0.3); }
+html[data-theme="magic"] .rail [aria-current="page"] { color: #f3c669; }
+html[data-theme="magic"] .rail a:hover { background: rgba(212, 168, 83, 0.1); }
+html[data-theme="magic"] .sound-btn { color: #f3c669; background: rgba(17, 28, 58, 0.9); border-color: rgba(212, 168, 83, 0.45); box-shadow: 0 0 14px rgba(212, 168, 83, 0.12); }
+html[data-theme="magic"] .sound-btn:hover { background: #18264d; }
+html[data-theme="magic"] .sound-btn.is-on { background: #f3c669; color: #0b132b; }
+html[data-theme="magic"] .sound-note { color: #f3c669; background: #111c3a; border-color: rgba(212, 168, 83, 0.45); }
+
+/* Switch to magic mode / daylight */
+.magic-btn { background: #172347; color: #fdf8ee; border-color: transparent; }
+.magic-btn:hover { background: #1e2d58; }
+.magic-btn .mg-day { display: inline-flex; }
+.magic-btn .mg-night { display: none; }
+html[data-theme="magic"] .magic-btn .mg-spark { -webkit-text-fill-color: currentColor; background: none; }
+html[data-theme="magic"] .magic-btn { background: rgba(17, 28, 58, 0.9); color: #f3c669; border-color: rgba(212, 168, 83, 0.45); }
+html[data-theme="magic"] .magic-btn:hover { background: #18264d; }
+html[data-theme="magic"] .magic-btn .mg-day { display: none; }
+html[data-theme="magic"] .magic-btn .mg-night { display: inline-flex; }
+
+/* signature line */
+html[data-theme="magic"] .star { background-image: linear-gradient(135deg, #f3c669, #ffe3a3); }
+html[data-theme="magic"] .magic-shimmer { color: #f3c669; background-image: linear-gradient(90deg, #f3c669, #ffe9b8, #e0a94a, #f3c669); }
+html[data-theme="magic"] .hero-wash { opacity: 0.38; }
+
+/* ----- hero: night media slot + moonlit colour grade ----- */
+.night-layer { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 0.7s ease; }
+html[data-theme="magic"] .night-layer { opacity: 1; }
+.night-img, .night-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; max-width: none; }
+.night-video { opacity: 0; transition: opacity 0.9s ease; }
+.night-video.is-ready { opacity: 1; }
+/* the daylight sparkles / laptop glow are positioned for the daylight painting, so they step aside at night */
+html[data-theme="magic"] .fx { display: none; }
+/* the bottom of the banner melts into the midnight page */
+.hero-bottom-fade { position: absolute; inset-inline: 0; bottom: 0; height: clamp(36px, 8%, 64px); pointer-events: none; opacity: 0; transition: opacity 0.7s ease; background: linear-gradient(to bottom, rgba(11, 19, 43, 0) 0%, rgba(11, 19, 43, 0.5) 60%, #0b132b 100%); }
+html[data-theme="magic"] .hero-bottom-fade { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .night-video { display: none; } .night-layer, .hero-bottom-fade { transition: none; } }
+
+/* ----- ambient cosmos (shown only in Magic Mode) ----- */
+.ambient { display: none; }
+html[data-theme="magic"] .ambient { display: block; animation: ambient-in 1.2s ease both; }
+@keyframes ambient-in { from { opacity: 0; } to { opacity: 1; } }
+.neb { position: absolute; border-radius: 50%; will-change: transform; }
+.neb-a { width: 70vmax; height: 70vmax; left: -20vmax; top: -15vmax; background: radial-gradient(circle, rgba(61, 78, 168, 0.28) 0%, rgba(61, 78, 168, 0) 65%); animation: neb-drift 70s ease-in-out infinite alternate; }
+.neb-b { width: 60vmax; height: 60vmax; right: -18vmax; top: 20vh; background: radial-gradient(circle, rgba(212, 168, 83, 0.1) 0%, rgba(212, 168, 83, 0) 65%); animation: neb-drift 90s ease-in-out -20s infinite alternate-reverse; }
+.neb-c { width: 55vmax; height: 55vmax; left: 25vw; bottom: -25vmax; background: radial-gradient(circle, rgba(104, 67, 170, 0.22) 0%, rgba(104, 67, 170, 0) 65%); animation: neb-drift 80s ease-in-out -35s infinite alternate; }
+@keyframes neb-drift { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(8vmax, 5vmax, 0) scale(1.12); } }
+.star-dot { position: absolute; border-radius: 50%; background: #eae4d7; opacity: 0.2; animation: twinkle-star var(--tw) ease-in-out infinite; }
+.star-dot.is-gold { background: #f3c669; }
+@keyframes twinkle-star { 0%, 100% { opacity: 0.15; transform: scale(0.8); } 50% { opacity: 0.95; transform: scale(1.2); } }
+.spark { position: absolute; background: #f3c669; opacity: 0.4; clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%); animation: twinkle-spark var(--tw) ease-in-out infinite; }
+@keyframes twinkle-spark { 0%, 100% { opacity: 0.2; transform: scale(0.7) rotate(0deg); } 50% { opacity: 0.9; transform: scale(1.1) rotate(20deg); } }
+.firefly { position: absolute; border-radius: 50%; background: radial-gradient(circle, #f3c669 0%, rgba(243, 198, 105, 0.55) 32%, rgba(243, 198, 105, 0) 70%); opacity: 0.6; will-change: transform, opacity; animation: ff-drift var(--drift) ease-in-out infinite alternate, ff-pulse var(--pulse) ease-in-out infinite; }
+@keyframes ff-drift { 0% { transform: translate3d(0, 0, 0); } 33% { transform: translate3d(calc(var(--dx) * 0.4), calc(var(--dy) * 0.6), 0); } 66% { transform: translate3d(calc(var(--dx) * -0.3), calc(var(--dy) * 0.9), 0); } 100% { transform: translate3d(var(--dx), var(--dy), 0); } }
+@keyframes ff-pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.95; } }
+@media (prefers-reduced-motion: reduce) {
+  .neb, .star-dot, .spark, .firefly { animation: none; }
+  .firefly { opacity: 0.5; }
+}
+
+
+/* =====================================================================================================
+   MAGIC MODE · hierarchy pass (comes last so it wins ties):
+   gold only for display headings, metric numbers and small accents; eyebrows and captions in starlight;
+   luminous jewel-toned pills so nothing blends into the navy.
+   ===================================================================================================== */
+html[data-theme="magic"] .hero-id { color: #f8f6f0; }
+html[data-theme="magic"] .eyebrow, html[data-theme="magic"] h2.eyebrow, html[data-theme="magic"] .hero-eyebrow { color: #e2e8f0; }
+html[data-theme="magic"] .metric-cap, html[data-theme="magic"] .card-desc { color: #e2e8f0; }
+
+/* Open to work: luminous dark emerald, mint text, bright glowing dot */
+html[data-theme="magic"] .pill-open { background: rgba(15, 46, 38, 0.95); border-color: rgba(74, 222, 128, 0.7); color: #a7f3d0; box-shadow: 0 0 14px rgba(74, 222, 128, 0.18); }
+html[data-theme="magic"] .pill-open:hover { background: #12382e; }
+html[data-theme="magic"] .pill-open .pill-dot { background: #4ade80; box-shadow: 0 0 8px 2px rgba(74, 222, 128, 0.75); }
+html[data-theme="magic"] .pill-open .pill-ring { background: rgba(74, 222, 128, 0.6); }
+
+/* category / skill pills, one jewel tone each */
+html[data-theme="magic"] .pill[data-tone="amber"] { background-color: #2c1f14; border-color: rgba(251, 191, 36, 0.5); color: #fde68a; }
+html[data-theme="magic"] .pill[data-tone="teal"] { background-color: #0f2936; border-color: rgba(56, 189, 248, 0.5); color: #bae6fd; }
+html[data-theme="magic"] .pill[data-tone="lavender"] { background-color: #211a38; border-color: rgba(167, 139, 250, 0.5); color: #ddd6fe; }
+html[data-theme="magic"] .pill[data-tone="rose"] { background-color: #2e1622; border-color: rgba(251, 113, 133, 0.5); color: #fecdd3; }
+
+
+/* =====================================================================================================
+   Final polish
+   ===================================================================================================== */
+/* footer: daylight painting crossfades to the night panorama (no colour grade on either) */
+.footer-img-day, .footer-img-night { transition: opacity 0.7s ease; }
+.footer-img-night { opacity: 0; }
+html[data-theme="magic"] .footer-img-night { opacity: 1; }
+html[data-theme="magic"] .footer-img-day { opacity: 0; }
+
+/* hero headline wording */
+.h-magic { display: none; }
+html[data-theme="magic"] .h-day { display: none; }
+html[data-theme="magic"] .h-magic { display: inline; }
+
+/* Selected Work: cover image appears only once it has really loaded; COMING SOON ribbon */
+.cover-img { opacity: 0; transition: opacity 0.5s ease; }
+.cover-img.is-loaded { opacity: 1; }
+
+/* signature line: brighter, with stars that read clearly in both modes */
+.star { font-size: 0.95em; filter: drop-shadow(0 0 5px rgba(192, 38, 211, 0.45)); animation: twinkle-fast 1.6s ease-in-out infinite; }
+.star-end { animation-delay: 0.8s; }
+@keyframes twinkle-fast {
+  0%, 100% { opacity: 0.4; transform: scale(0.85) rotate(-8deg); }
+  50% { opacity: 1; transform: scale(1.25) rotate(8deg); }
+}
+/* the highlight must not inherit a text-shadow: it would show straight through the transparent, gradient-clipped letters */
+.magic-shimmer { font-weight: 600; text-shadow: none; }
+html[data-theme="magic"] .signature { color: #f8f6f0; }
+html[data-theme="magic"] .star { filter: drop-shadow(0 0 7px rgba(243, 198, 105, 0.85)); }
+html[data-theme="magic"] .magic-shimmer { filter: drop-shadow(0 0 8px rgba(243, 198, 105, 0.45)); background-image: linear-gradient(90deg, #f3c669, #fff0c2, #f0b84e, #f3c669); }
+@media (prefers-reduced-motion: reduce) { .star { animation: none; opacity: 0.95; } }
+
+
+/* ---------- Coming-soon cards: only the ribbon keeps its colour; the rest reads as inactive ---------- */
+.soon-body { opacity: 0.65; filter: grayscale(75%); }
+/* daylight: the upcoming cards sit on a neutral, flatter parchment and a quieter border, so Access Controls reads as the active one */
+html:not([data-theme="magic"]) article.is-soon { background-color: rgba(235, 229, 216, 0.75); border-color: rgba(122, 92, 50, 0.18); box-shadow: none; }
+html:not([data-theme="magic"]) article.is-soon .soon-body { opacity: 0.65; }
+
+/* the ribbons stay vibrant and un-faded, each with its own accent */
+.soon-ribbon[data-ribbon="coral"] { background: #f4d5c6; color: #8f3519; border-color: rgba(217, 119, 87, 0.4); }
+.soon-ribbon[data-ribbon="sage"] { background: #d3e2d8; color: #234e38; border-color: rgba(93, 139, 112, 0.4); }
+html[data-theme="magic"] .soon-ribbon[data-ribbon="coral"] { background: #3b2647; color: #f7b28b; border-color: rgba(224, 138, 99, 0.4); }
+html[data-theme="magic"] .soon-ribbon[data-ribbon="sage"] { background: #163644; color: #7ed4c1; border-color: rgba(82, 178, 158, 0.4); }
+
+/* ---------- Mobile: the footer artwork runs flush down to the fixed tab bar ---------- */
+/* A strip in the artwork's own grass colour sits under the picture where the tab bar will cover it, so no page-coloured
+   gap can ever show between the grass and the bar (whatever the bar's exact height on a given phone). */
+.footer-pad { display: none; background: #8d7421; transition: background-color 0.7s ease; }
+html[data-theme="magic"] .footer-pad { background: #1e2c35; }
+@media (max-width: 1023px) { .footer-pad { display: block; height: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom)); } }
+
+
+/* =====================================================================================================
+   Magic-mode toggle: revolving gradient ring, periodic shimmer, sparkle (daylight only)
+   ===================================================================================================== */
+.magic-wrap { overflow: hidden; box-shadow: 0 0 16px rgba(168, 85, 247, 0.35); transition: box-shadow 0.7s ease; }
+.magic-ring {
+  position: absolute; left: 50%; top: 50%; width: 320%; aspect-ratio: 1; pointer-events: none;
+  margin: 0; translate: -50% -50%;
+  background: conic-gradient(from 0deg, #ec4899, #a855f7, #f59e0b, #ec4899);
+  animation: ring-spin 3s linear infinite; transition: opacity 0.7s ease;
+}
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+.magic-btn { overflow: hidden; }
+.magic-btn::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; transform: translateX(-130%) skewX(-20deg);
+  background: linear-gradient(100deg, transparent 38%, rgba(255, 255, 255, 0.35) 50%, transparent 62%);
+  animation: btn-shimmer 5.5s ease-in-out infinite;
+}
+@keyframes btn-shimmer { 0%, 62% { transform: translateX(-130%) skewX(-20deg); } 85%, 100% { transform: translateX(130%) skewX(-20deg); } }
+.mg-spark { display: inline-block; color: #f3c669; background: none; -webkit-text-fill-color: currentColor; font-size: 1.05em; animation: spark-pulse 2.2s ease-in-out infinite; }
+@keyframes spark-pulse { 0%, 100% { transform: scale(0.9) rotate(0deg); opacity: 0.75; } 50% { transform: scale(1.3) rotate(18deg); opacity: 1; } }
+/* in Magic Mode the pill returns to its calm navy-and-gold look */
+html[data-theme="magic"] .magic-ring { opacity: 0; }
+html[data-theme="magic"] .magic-wrap { box-shadow: none; }
+html[data-theme="magic"] .magic-btn::after { display: none; }
+@media (prefers-reduced-motion: reduce) { .magic-ring { animation: none; } .magic-btn::after { display: none; } .mg-spark { animation: none; } }
+
+/* phones: the hero overlay text is light over the dark scrim; fade the scrim's lower edge softly */
+.hero-scrim { -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%); mask-image: linear-gradient(to bottom, #000 62%, transparent 100%); }
+.intro-copy strong { color: inherit; }
+
+/* =====================================================================================================
+   Envelope on phones (< 768px): no 3D flip. The flap simply folds flat and fades out when the envelope opens, and only
+   comes back at the very end of the close, so no triangular flap geometry can ever sit over the letter (mobile
+   browsers can ignore z-index inside a 3D context). Desktop (>= 768px) is untouched.
+   ===================================================================================================== */
+@media (max-width: 767px) {
+  .flap { transform-style: flat; transform: none; opacity: 1; visibility: visible; z-index: 20;
+    transition: opacity 0.25s ease 0.7s, transform 0.25s ease 0.7s, visibility 0s linear 0.7s, z-index 0s linear 0.7s; }
+  .flap-back { display: none; }
+  .flap-face { transition: none; }
+  .flap-seal { z-index: 30; transition: none; }
+  .env.is-open .flap { transform: scaleY(0.2); opacity: 0; visibility: hidden; z-index: 0;
+    transition: opacity 0.25s ease 0s, transform 0.25s ease 0s, visibility 0s linear 0.25s, z-index 0s linear 0s; }
+  .env.is-open .flap-face { opacity: 1; transition: none; }
+  .env.is-open .flap-seal { opacity: 1; transition: none; }
+}
+
+/* phones, daylight: light overlay text over the dark scrim (Magic Mode text is already light) */
+@media (max-width: 639px) {
+  .hero-overlay { text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35); }
+  html[data-theme="magic"] .hero-scrim { background-image: linear-gradient(to bottom, rgba(11, 19, 43, 0.25), transparent 70%); }
+  html:not([data-theme="magic"]) .hero-overlay .hero-id { color: #fbf7ee; }
+  html:not([data-theme="magic"]) .hero-overlay h1 { color: #fffdf6; }
+}
+
+/* magic toggle: full label from 640px, compact label on phones (so the whole top bar fits on one row) */
+.mg-short { display: none; }
