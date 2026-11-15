@@ -537,7 +537,7 @@ html[data-theme="magic"] .soon-ribbon[data-ribbon="sage"] { background: #163644;
    gap can ever show between the grass and the bar (whatever the bar's exact height on a given phone). */
 .footer-pad { display: none; background: #8d7421; transition: background-color 0.7s ease; }
 html[data-theme="magic"] .footer-pad { background: #1e2c35; }
-@media (max-width: 1023px) { .footer-pad { display: block; height: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom)); } }
+@media (max-width: 1023px) { .footer-pad { display: block; height: calc(var(--bottom-nav-h) + 0.5rem + env(safe-area-inset-bottom)); } }
 
 
 /* =====================================================================================================
@@ -590,10 +590,17 @@ html[data-theme="magic"] .magic-btn::after { display: none; }
 /* phones, daylight: light overlay text over the dark scrim (Magic Mode text is already light) */
 @media (max-width: 639px) {
   .hero-overlay { text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35); }
+  /* daylight: deep espresso headline on the bright sky (cream text + dark shadow only in Magic Mode) */
+  html:not([data-theme="magic"]) .hero-overlay { text-shadow: 0 1px 6px rgba(255, 248, 232, 0.55); }
+  html:not([data-theme="magic"]) .hero-scrim { display: none; }
   html[data-theme="magic"] .hero-scrim { background-image: linear-gradient(to bottom, rgba(11, 19, 43, 0.25), transparent 70%); }
   html:not([data-theme="magic"]) .hero-overlay .hero-id { color: #fbf7ee; }
-  html:not([data-theme="magic"]) .hero-overlay h1 { color: #fffdf6; }
+  html:not([data-theme="magic"]) .hero-overlay h1 { color: #2c221e; }
 }
 
 /* magic toggle: full label from 640px, compact label on phones (so the whole top bar fits on one row) */
 .mg-short { display: none; }
+
+/* mobile bottom navigation: flush to the viewport bottom, opaque, safe-area aware (iOS Safari toolbar) */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #f5efe6; padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); }
+html[data-theme="magic"] .bottom-nav { background: #0f172e; }
