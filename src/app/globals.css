@@ -497,9 +497,7 @@ html[data-theme="magic"] .footer-img-night { opacity: 1; }
 html[data-theme="magic"] .footer-img-day { opacity: 0; }
 
 /* hero headline wording */
-.h-magic { display: none; }
-html[data-theme="magic"] .h-day { display: none; }
-html[data-theme="magic"] .h-magic { display: inline; }
+.h-day, .h-magic { display: inline; }
 
 /* Selected Work: cover image appears only once it has really loaded; COMING SOON ribbon */
 .cover-img { opacity: 0; transition: opacity 0.5s ease; }

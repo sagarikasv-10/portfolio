@@ -1,5 +1,6 @@
 import { HERO, METRICS } from "@/content/site";
 import { AvailabilityPill } from "./AvailabilityPill";
+import { HeroHeading } from "./HeroHeading";
 
 /** Top-left overlay inside the hero illustration: the headline, below the controls row that HeroArt places at the top. */
 export function HeroOverlay() {
@@ -7,26 +8,7 @@ export function HeroOverlay() {
     <div className="hero-overlay">
       {/* the magic + sound controls (rendered by HeroArt) sit at the very top-left; this spacer reserves their row */}
       <div aria-hidden className="h-[60px]" />
-      <h1 className="display max-w-[62%] text-balance text-[26px] font-semibold leading-[1.15] tracking-[-0.02em] text-ink sm:max-w-none sm:text-[clamp(1.95rem,1rem+4.7vw,2.7rem)] sm:leading-[1.08] md:whitespace-nowrap md:[text-wrap:nowrap] md:text-[clamp(2.3rem,1.25rem+2.4vw,3.5rem)] md:leading-[1.04]">
-        {/* Daylight wording */}
-        <span className="h-day">
-          Welcome to my{" "}
-          <span className="relative inline-block">
-            safe space.
-            <svg aria-hidden className="absolute -bottom-1 left-0 h-[0.28em] w-full text-ochre" viewBox="0 0 300 14" preserveAspectRatio="none" fill="none">
-              <path d="M3 9C60 3 118 11 190 6S270 8 297 4" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-            </svg>
-          </span>
-        </span>
-        {/* Magic Mode wording (CSS swaps the two; only the visible one is read) */}
-        <span className="h-magic">
-          Welcome to my{" "}
-          <span className="relative inline-block">
-            <em className="font-normal italic">magical space.</em>
-          </span>
-          <span aria-hidden className="ml-1.5 inline-block align-[0.12em] text-[0.62em] font-normal text-ochre">&#10022;</span>
-        </span>
-      </h1>
+      <HeroHeading />
     </div>
   );
 }
