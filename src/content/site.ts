@@ -127,8 +127,8 @@ export const WORK = {
       description: "Designing modular, high-intent landing experiences for Sri Mandir that drove web-to-app acquisition and were later adopted natively inside the app.",
       company: "AppsForBharat",
       skill: "Product Design",
-      href: null,
-      status: "soon",
+      href: "https://drive.google.com/file/d/1imGWx_ybuHcujTNtERkz6GaSWvwFiLCM/view?usp=sharing",
+      status: "live",
       image: null,
     },
 
