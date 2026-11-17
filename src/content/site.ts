@@ -129,7 +129,7 @@ export const WORK = {
       skill: "Product Design",
       href: "https://drive.google.com/file/d/1imGWx_ybuHcujTNtERkz6GaSWvwFiLCM/view?usp=sharing",
       status: "live",
-      image: null,
+      image: { src: "/work/landing-pages.webp", alt: "Three Sri Mandir landing page screens: Pitru Paksha pujas at Gaya, the legend of Rama Ekadashi, and Navratri Pratipada pujas" },
     },
 
     {
