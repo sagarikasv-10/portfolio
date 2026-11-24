@@ -3,9 +3,9 @@
 /* The studies were designed as 1440px pages, which reads oversized inside the site shell, so the whole article is
    scaled to --cs-zoom (84% on desktop, a little larger on small screens where text must stay readable). */
 :root { --cs-zoom: 0.84; }
-@media (max-width: 1023px) { :root { --cs-zoom: 0.9; } }
-@media (max-width: 639px) { :root { --cs-zoom: 0.92; } }
-.cs { zoom: var(--cs-zoom); overflow-x: clip; }
+/* below desktop the article is NOT zoomed: plain 1:1 CSS px, so phones and tablets never depend on `zoom` support */
+@media (max-width: 1023px) { :root { --cs-zoom: 1; } .cs { zoom: normal !important; } }
+.cs { zoom: var(--cs-zoom); width: 100%; max-width: 100%; overflow-x: hidden; overflow-x: clip; }
 .cs-bar { max-width: calc(1272px * var(--cs-zoom) + 4rem); }
 .cs img { max-width: 100%; }
 .cs .page, .cs .pg { width: 100%; overflow: visible; }
@@ -77,3 +77,39 @@
 
 /* category pill above the title: same look as the homepage cards, un-scaled so it keeps its 12px size */
 .cs .cs-pill { display: inline-block; zoom: calc(1 / var(--cs-zoom)); margin: 0 0 18px; padding: 4px 12px; font: 500 0.75rem/1rem var(--font-sans); letter-spacing: normal; text-transform: none; border: 1px solid rgba(140, 109, 63, 0.25); border-radius: 9999px; background: #efe4ce; color: #5c4928; }
+
+/* ===== phones & small tablets (<= 768px): everything fluid, one column ===== */
+@media (max-width: 768px) {
+  .cs, .cs .page, .cs .pg { width: 100%; max-width: 100%; }
+  .cs .band { padding-left: 20px; padding-right: 20px; }
+  .cs [style*="grid-template-columns"], .cs .g2, .cs .g3, .cs .twocol, .cs .kv, .cs .grid, .cs .row,
+  .cs .gal, .cs .gal4, .cs .gal2, .cs .g3c, .cs .bs { grid-template-columns: 1fr !important; }
+  .cs [style*="display:flex"]:not([style*="gap:14px"]), .cs .crit { flex-direction: column !important; }
+  .cs .crit { gap: 8px; }
+  .cs [style*="width:"], .cs [style*="width:50%"] { width: 100% !important; max-width: 100% !important; }
+  .cs [style*="width:50%"] { padding: 0 !important; }
+  .cs img, .cs svg { max-width: 100%; height: auto; display: block; }
+  .cs .shot img { width: auto; margin: 0 auto; }
+  .cs .shot .frame { height: auto !important; min-height: 0; }
+  .cs .card, .cs .snap, .cs .sagecard, .cs .ic, .cs .bc, .cs .quote { max-width: 100%; }
+  /* fluid headline and stat sizes (375px to 430px phones wrap cleanly) */
+  .cs h1 { font-size: clamp(1.75rem, 7.6vw, 2.3rem) !important; line-height: 1.1; overflow-wrap: break-word; }
+  .cs h2 { font-size: clamp(1.4rem, 6.2vw, 1.85rem); overflow-wrap: break-word; }
+  .cs h3 { overflow-wrap: break-word; }
+  .cs .stat { font-size: clamp(2.4rem, 12vw, 3.25rem); }
+  .cs .stat small { font-size: 0.7em; }
+  .cs .scell .big, .cs .ic .num { font-size: clamp(1.7rem, 8.6vw, 2.3rem); white-space: normal; }
+  .cs .metric { font-size: clamp(1.25rem, 5.6vw, 1.7rem); }
+  .cs .sub { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+  .cs .lead { font-size: clamp(1rem, 4.4vw, 1.15rem) !important; }
+  .cs p, .cs li, .cs td { overflow-wrap: anywhere; }
+  /* comparison tables become stacked cards, each cell labelled by its column heading */
+  .cs table.m, .cs table.m tbody, .cs table.m tr, .cs table.m td { display: block; width: 100%; }
+  .cs table.m { overflow: visible; padding: 8px 16px 4px !important; }
+  .cs table.m tr:first-child { display: none; }
+  .cs table.m tr + tr { border-top: 1px solid var(--rule); padding: 14px 0; }
+  .cs table.m tr:nth-child(2) { border-top: 0; }
+  .cs table.m td { border-top: 0; padding: 6px 0; }
+  .cs table.m td[data-label]::before { content: attr(data-label); display: block; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--sage); margin-bottom: 2px; }
+  .cs table.m td.n { white-space: normal; font-size: 20px; }
+}

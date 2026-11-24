@@ -2,7 +2,7 @@ import { LINKS } from "@/content/site";
 
 const base = "inline-flex items-center justify-center gap-2 rounded-full font-medium uppercase transition-all duration-300";
 const full = `${base} min-h-11 px-6 py-3 text-xs tracking-[0.14em]`;
-const compactCls = `${base} min-h-9 whitespace-nowrap px-4 py-2 text-[11px] tracking-[0.12em]`;
+const compactCls = `${base} min-h-8 whitespace-nowrap px-3 py-1.5 text-[10px] tracking-[0.08em] sm:min-h-9 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.12em]`;
 
 /** Matching primary + secondary buttons: under Selected Work and About Me, and (compact) in the case study bar. */
 export function CtaPair({ compact = false, className }: { compact?: boolean; className?: string }) {
