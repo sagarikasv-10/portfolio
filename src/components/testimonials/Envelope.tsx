@@ -77,13 +77,10 @@ function Mist({ uid }: { uid: string }) {
 }
 
 /**
- * One tactile envelope. Closed: sealed flap, stamp, postmark, sender. Open (hover on desktop, tap on touch, Enter/Space):
+ * One tactile envelope. Closed: sealed flap, stamp, postmark, sender. Open (click or tap, or Enter/Space):
  * flap rotates up and tucks the seal away, the letter slides out and sits in front with the full quote.
  * Styles for the states live in globals.css under "Kind Words".
  */
-/** True on devices with a real hover pointer (desktop mouse / trackpad); false on touch screens. */
-const canHover = () => typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
 export function Envelope({ t, interactive, open, onOpen, onClose, onToggle, copy = 0, primary = true }: { t: Testimonial; interactive: boolean; primary?: boolean; open?: boolean; onOpen?: () => void; onClose?: () => void; onToggle?: () => void; copy?: number }) {
   const uid = `${copy}-${t.name.replace(/\W+/g, "").toLowerCase()}`;
   return (
@@ -91,10 +88,8 @@ export function Envelope({ t, interactive, open, onOpen, onClose, onToggle, copy
       className={`env relative mr-3 h-[232px] w-[340px] shrink-0 sm:mr-6 sm:h-[250px] sm:w-[375px] ${open ? "is-open" : ""}`}
       tabIndex={interactive && primary ? 0 : -1}
       aria-label={interactive && primary ? `Letter from ${t.name}, ${t.role}. Press Enter to open or close.` : undefined}
-      // desktop: hover opens / leaving closes. touch: tap toggles (the "emulated" mouseenter after a tap is ignored by canHover()).
-      onMouseEnter={interactive ? () => { if (canHover()) onOpen?.(); } : undefined}
-      onMouseLeave={interactive ? () => { if (canHover()) onClose?.(); } : undefined}
-      onClick={interactive ? () => { if (!canHover()) onToggle?.(); } : undefined}
+      // click (desktop) or tap (touch) toggles open / closed; hovering only lifts the envelope (see .env hover in globals.css)
+      onClick={interactive ? () => onToggle?.() : undefined}
       onBlur={interactive ? () => { if (open) onClose?.(); } : undefined}
       onKeyDown={interactive ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onToggle?.(); } } : undefined}
     >

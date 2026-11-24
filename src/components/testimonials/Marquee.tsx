@@ -7,7 +7,7 @@ import { Envelope } from "./Envelope";
 /**
  * Kind Words row: a plain, user-controlled horizontal scroll track (no auto-sliding). Touch / trackpad / shift-wheel
  * scroll it, soft scroll-snap settles on an envelope, and the next envelope always peeks in from the right edge.
- * Hover (desktop) or tap (touch) opens a letter; only one is open at a time.
+ * Click (desktop) or tap (touch) opens and closes a letter; only one is open at a time.
  */
 export function Marquee({ items }: { items: Testimonial[] }) {
   const [openEnvelopeIndex, setOpenEnvelopeIndex] = useState<string | null>(null);
@@ -33,13 +33,12 @@ export function Marquee({ items }: { items: Testimonial[] }) {
             interactive
             primary
             open={openEnvelopeIndex === `0-${i}`}
-            onOpen={() => setOpenEnvelopeIndex(`0-${i}`)}
             onClose={() => setOpenEnvelopeIndex((cur) => (cur === `0-${i}` ? null : cur))}
             onToggle={() => setOpenEnvelopeIndex((cur) => (cur === `0-${i}` ? null : `0-${i}`))}
           />
         ))}
       </div>
-      <span className="sr-only">Hover, tap, or press Enter on a letter to read it.</span>
+      <span className="sr-only">Click, tap, or press Enter on a letter to open or close it.</span>
     </div>
   );
 }
