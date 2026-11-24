@@ -4,6 +4,7 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import type { WorkItem } from "@/content/site";
 import { Thumb } from "./Thumbs";
+import { PILL_CLASS, TONE } from "./pill";
 
 /** Hand-cut scallop path along x (0–400), deterministic so server and client match. Returns [top edge, filled shape]. */
 function wavePaths(): [string, string] {
@@ -45,8 +46,6 @@ function Grain({ id }: { id: string }) {
   );
 }
 
-/** Night-mode jewel tone for each category pill. */
-const TONE: Record<WorkItem["id"], string> = { rhythms: "amber", access: "teal", system: "lavender" };
 
 const LINK_CLS = "mb-5 inline-flex items-center gap-1.5 self-start text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8C581A] hover:underline";
 
@@ -103,7 +102,7 @@ export function WorkCard({ item }: { item: WorkItem }) {
         <Wave />
       </div>
       <div className={`flex flex-1 flex-col px-6 pb-6 pt-2 text-left${soon ? " soon-body" : ""}`}>
-        <span data-tone={TONE[item.id]} className="pill mb-3 inline-block self-start rounded-full border border-[#8C6D3F]/25 bg-[#EFE4CE] px-3 py-1 text-xs font-medium text-[#5C4928]">{item.tag}</span>
+        <span data-tone={TONE[item.id]} className={`${PILL_CLASS} mb-3`}>{item.tag}</span>
         <h3 className="display mb-2.5 text-2xl font-medium text-[#1A1A1A]">{item.title}</h3>
         <p className="card-desc mb-4 text-sm leading-relaxed text-[#1A1A1A]/75">{item.description}</p>
         {soon ? (

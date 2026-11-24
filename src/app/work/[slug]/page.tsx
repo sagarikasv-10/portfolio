@@ -7,10 +7,11 @@ import { Footer } from "@/components/footer/Footer";
 import { BottomNav } from "@/components/nav/BottomNav";
 import { LeftRail } from "@/components/nav/LeftRail";
 import { NoteProvider } from "@/components/nav/useNavAction";
-import { CtaPair } from "@/components/CtaPair";
+import { Signature } from "@/components/about/Signature";
 import { PageEffects } from "@/components/PageEffects";
 import { SkipLink } from "@/components/SkipLink";
-import { CASE_STUDIES, type CaseSlug } from "@/content/site";
+import { PILL_CLASS, TONE } from "@/components/work/pill";
+import { CASE_STUDIES, WORK, type CaseSlug } from "@/content/site";
 import "@/content/case-studies/access-controls.css";
 import "@/content/case-studies/devotional-landing-pages.css";
 import "@/content/case-studies/port-dark-mode.css";
@@ -40,7 +41,12 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
   const slug = params.slug as CaseSlug;
   const cs = CASE_STUDIES[slug];
   if (!cs) notFound();
-  const html = fs.readFileSync(path.join(process.cwd(), "src/content/case-studies", `${slug}.html`), "utf8");
+  const raw = fs.readFileSync(path.join(process.cwd(), "src/content/case-studies", `${slug}.html`), "utf8");
+  // the homepage card's category pill, repeated above the case study title
+  const card = WORK.items.find((i) => i.href === `/work/${slug}`);
+  const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const pill = card ? `<span data-tone="${TONE[card.id]}" class="cs-pill ${PILL_CLASS}">${esc(card.tag)}</span>` : "";
+  const html = raw.replace("<!--CASE_PILL-->", pill);
   return (
     <NoteProvider>
       <SkipLink />
@@ -51,9 +57,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
         <div className="lg:-ml-16">
           <article className={`cs cs-${slug}`} dangerouslySetInnerHTML={{ __html: html }} />
         </div>
-        <section aria-label="Get in touch" className="border-t border-[#7A5C32]/25 bg-paper px-5 pb-14 pt-2 lg:-ml-16 lg:pl-16">
-          <CtaPair className="mt-10 flex flex-wrap items-center justify-center gap-4" />
-        </section>
+        <Signature />
         <Footer />
       </main>
       <BottomNav base="/" active="work" />
