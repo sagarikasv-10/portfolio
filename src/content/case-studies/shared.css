@@ -113,3 +113,6 @@
   .cs table.m td[data-label]::before { content: attr(data-label); display: block; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--sage); margin-bottom: 2px; }
   .cs table.m td.n { white-space: normal; font-size: 20px; }
 }
+
+/* retired live-campaign links: quiet, non-clickable archival caption */
+.cs .archived { display: inline-block; margin-left: 4px; font-size: 0.8em; font-style: italic; letter-spacing: 0.02em; color: var(--sub); opacity: 0.85; cursor: default; user-select: text; }
