@@ -88,7 +88,7 @@ export function Envelope({ t, interactive, open, onOpen, onClose, onToggle, copy
   const uid = `${copy}-${t.name.replace(/\W+/g, "").toLowerCase()}`;
   return (
     <article
-      className={`env relative mr-6 h-[232px] w-[340px] shrink-0 sm:h-[250px] sm:w-[375px] ${open ? "is-open" : ""}`}
+      className={`env relative mr-3 h-[232px] w-[340px] shrink-0 sm:mr-6 sm:h-[250px] sm:w-[375px] ${open ? "is-open" : ""}`}
       tabIndex={interactive && primary ? 0 : -1}
       aria-label={interactive && primary ? `Letter from ${t.name}, ${t.role}. Press Enter to open or close.` : undefined}
       // desktop: hover opens / leaving closes. touch: tap toggles (the "emulated" mouseenter after a tap is ignored by canHover()).
@@ -131,6 +131,8 @@ export function Envelope({ t, interactive, open, onOpen, onClose, onToggle, copy
       </div>
       <Postmark />
       <Stamp uid={uid} />
+      {/* "TAP TO OPEN": a hand-stamped postal cancellation; fades out once the letter is open */}
+      {interactive && <span aria-hidden className="tap-cue env-stamp">Tap to open</span>}
 
       {/* folded flap + wax seal */}
       <div className="flap">

@@ -1,0 +1,183 @@
+<div class="page">
+
+<!-- INTRO -->
+<section class="band b1" style="padding-top:64px;padding-bottom:92px">
+  <div class="eyebrow c" style="color:var(--copper);margin-bottom:28px">UX Case Study &nbsp;/&nbsp; Messaging · Privacy</div>
+  <div style="display:grid;grid-template-columns:540px 1fr;gap:30px;align-items:center">
+    <div>
+      <h1>Designing access without friction.</h1>
+      <p class="lead" style="margin-top:34px;font-size:24px;line-height:1.5">A contact-level privacy system that lets people decide what each connection can do and see, without leaving the chat.</p>
+    </div>
+    <div class="fig"><img src="/case-studies/access-controls/img-01.webp" width="2400" height="1288" style="width:100%;height:auto;display:block"></div>
+  </div>
+
+  <div class="card on2" style="margin-top:56px;padding:34px 38px;background:#faf5e9">
+    <div style="display:grid;grid-template-columns:1.1fr 1.1fr 1.1fr 1.3fr;gap:0">
+      <div class="cell"><div class="k">The product</div><div class="v">Port, by Numberless<em>A privacy-first messaging app</em></div></div>
+      <div class="cell"><div class="k">My role</div><div class="v">Product &amp; visual design<em>Concepts, interaction model, UI</em></div></div>
+      <div class="cell"><div class="k">Timeline</div><div class="v">July 2024<em>Designed and shipped in 24 hours</em></div></div>
+      <div class="cell last"><div class="k">The team</div><div class="v">Ruthvik<em>Chief Design Officer, Port</em></div><div class="v" style="margin-top:14px">Sagarika SV<em>Product &amp; Visual Design</em></div></div>
+    </div>
+  </div>
+
+  <div class="label" style="margin-top:48px;margin-bottom:18px">Reported outcomes</div>
+  <div class="grid g3" style="gap:30px">
+    <div class="card on2" style="padding:30px 32px;background:#faf5e9"><div class="stat">32%</div><div style="font-size:19px;font-weight:500">Increase in user onboarding</div></div>
+    <div class="card on2" style="padding:30px 32px;background:#faf5e9"><div class="stat">36%</div><div style="font-size:19px;font-weight:500">User growth</div></div>
+    <div class="card on2" style="padding:30px 32px;background:#faf5e9"><div class="stat">3<small>×</small></div><div style="font-size:19px;font-weight:500">Stronger retention patterns</div></div>
+  </div>
+  <p class="cap">Port's reported results, shared as context for the product rather than as the effect of one feature alone.</p>
+</section>
+
+<!-- CONTEXT + PROBLEM -->
+<section class="band b2">
+  <div class="eyebrow">01 / The context</div>
+  <h2>Privacy is part of the conversation.</h2>
+  <p class="lead">Port is a privacy-first messaging app. Access Controls extends that promise from the app to each individual connection, so people decide what every contact can do and see.</p>
+
+  <div class="card on1" style="margin-top:44px;padding:34px 38px">
+    <div class="label">The problem</div>
+    <h3 style="font-size:32px;margin-bottom:14px">Nine controls, one small screen.</h3>
+    <p class="body" style="max-width:1100px;color:var(--sub);font-size:18px">Per contact, people needed to manage six permissions and three chat settings. That is a lot of switches to put on a chat screen. Show them all and the conversation disappears under settings. Hide them all and the privacy promise goes with them. The real problem was never what the controls were. It was where they should live.</p>
+  </div>
+
+  <div class="grid" style="grid-template-columns:1.12fr 1fr;margin-top:30px">
+    <div class="card on1" style="padding:34px 38px">
+      <div class="label">The design question</div>
+      <div class="serif" style="font-size:34px;line-height:1.28;font-weight:500;margin-top:6px">How might we make a rich set of contact permissions easy to discover, simple to manage, and quiet enough not to interrupt the conversation?</div>
+    </div>
+    <div class="sagecard" style="padding:34px 38px">
+      <div class="label s">What needed to be controlled</div>
+      <div style="font-size:17.5px;font-weight:500;margin:14px 0 4px">Contact-specific permissions</div>
+      <ul class="bl"><li>Notifications and calls</li><li>Group additions and contact sharing</li><li>Read receipts and profile visibility</li></ul>
+      <div style="font-size:17.5px;font-weight:500;margin:20px 0 4px">Chat settings</div>
+      <ul class="bl"><li>Home visibility and media downloads</li><li>Disappearing messages</li></ul>
+    </div>
+  </div>
+<!-- GOALS -->
+<div style="margin-top:84px;padding-top:72px;border-top:1px solid var(--rule)">
+  <div class="eyebrow">02 / Design goals</div>
+  <h2>Three tests every idea had to pass.</h2>
+  <p class="lead">With a 24-hour window, there was no room to polish every direction. I turned the design question into three criteria so every concept could be judged against the same yardstick.</p>
+  <div class="grid g3" style="margin-top:44px">
+    <div class="sagecard"><div class="crit"><div class="num">01</div><div><h4>Easy to discover</h4><p>A person should notice access controls exist without being told.</p></div></div></div>
+    <div class="sagecard"><div class="crit"><div class="num">02</div><div><h4>Simple to manage</h4><p>Changing a permission should take a tap, and its current state should read at a glance.</p></div></div></div>
+    <div class="sagecard"><div class="crit"><div class="num">03</div><div><h4>Quiet</h4><p>The control should never get between a person and their conversation.</p></div></div></div>
+  </div>
+</div>
+
+</section>
+
+<!-- EXPLORATION 1 -->
+<section class="band b1">
+  <div class="eyebrow">03 / Exploration</div>
+  <h2>Idea 1: A shortcut inside the chat.</h2>
+  <p class="lead">The first direction put a floating icon in the conversation. Tapping it opens a compact permission panel; a close control returns you to the chat. For everything else, "View more settings" opens the full contact page.</p>
+  <div class="grid g3" style="margin-top:40px;gap:26px"><div class="card on2"><div class="label">What it offered</div><p class="body">Quick access to permissions without leaving the conversation.</p></div><div class="card on2"><div class="label">What it cost</div><p class="body">Permissions were not immediately evident. The floating icon competed with the chat, and the full set of settings was still an extra step away.</p></div><div class="takes"><div class="label s">What I took from it</div><p class="body" style="color:var(--sub)">Staying close to the conversation was right. A single floating icon was the wrong way to do it.</p></div></div><div class="sfig"><div class="shotf"><img src="/case-studies/access-controls/img-02.webp" width="2400" height="1811" loading="lazy" decoding="async"></div><div class="cap">Idea 1: floating entry point and expanded contact settings.</div></div>
+</section>
+
+<!-- EXPLORATION 2 -->
+<section class="band b2">
+  <div class="eyebrow">04 / Exploration</div>
+  <h2>Idea 2: Permissions in a horizontal scroll.</h2>
+  <p class="lead">The second direction brought permissions into the chat as a horizontally scrollable row of icon pills. One tap on a pill turns a permission on or off, and the pill changes to show it: green when enabled, grey with a stroke through the icon when disabled.</p>
+  <div class="grid g2" style="margin-top:40px;gap:30px"><div class="card on1"><div class="label">The trade-off</div><p class="body">Everything was visible at a glance. But the row would get crowded as permissions were added, and with no way to hide it, always-on controls risked becoming noise over time.</p></div><div class="takes"><div class="label s">What I took from it</div><p class="body" style="color:var(--sub)">Visible, tappable state is the right language, and the grey-and-stroke "off" treatment carried into the final design. A permanent row did not.</p></div></div><div class="sfig" style="width:1000px;margin-left:auto;margin-right:auto"><div class="shotf"><img src="/case-studies/access-controls/img-03.webp" width="2400" height="1864" loading="lazy" decoding="async"></div><div class="cap">Idea 2: horizontally browsable permission pills.</div></div>
+</section>
+
+<!-- CHOSEN -->
+<section class="band b1">
+  <div class="eyebrow">05 / Chosen direction</div>
+  <h2>Idea 3: A slider that adapts to the moment.</h2>
+  <p class="lead">The third direction resolved the tension between discoverability and distraction: a pull-down control in the chat header with three levels of visibility. The same space can be silent, glanceable or fully editable.</p>
+  <div class="grid g3" style="margin-top:40px;gap:30px">
+    <div class="sagecard" style="padding:24px 28px"><div class="crit"><div class="num">01</div><div><h4>Fully closed</h4><p>The conversation stays clear.</p></div></div></div>
+    <div class="sagecard" style="padding:24px 28px"><div class="crit"><div class="num">02</div><div><h4>Semi-open</h4><p>Icons provide a quick overview.</p></div></div></div>
+    <div class="sagecard" style="padding:24px 28px"><div class="crit"><div class="num">03</div><div><h4>Fully open</h4><p>Detailed permissions and toggles are available.</p></div></div></div>
+  </div>
+  <div style="margin-top:44px"><div class="grid g2" style="gap:30px;margin-top:30px"><div class="sfig" style="margin:0"><div class="shotf"><img src="/case-studies/access-controls/img-04.webp" width="1210" height="2806" loading="lazy" decoding="async"></div></div><div class="sfig" style="margin:0"><div class="shotf"><img src="/case-studies/access-controls/img-05.webp" width="1210" height="2806" loading="lazy" decoding="async"></div></div></div><div style="width:50%;margin:30px auto 0;padding:0 15px"><div class="shotf"><img src="/case-studies/access-controls/img-06.webp" width="1319" height="2806" loading="lazy" decoding="async"></div></div><div class="cap" style="text-align:center;margin-top:18px">Idea 3: a three-state slider integrated into the chat header. Fully closed, semi open and fully open.</div></div>
+
+  <div style="margin-top:72px">
+    <div class="label">Refined direction</div>
+    <h3 style="font-size:34px;margin-bottom:14px">The slider, refined.</h3>
+    <p class="body" style="max-width:1040px;color:var(--sub);font-size:18px">The slider carried forward with a more finished visual language. Every permission has its own coloured icon, "on" reads as green, and search, video and call stay in the header. The open panel tells people how to close it.</p>
+    <div style="margin-top:36px"><div class="grid g2" style="gap:30px;margin-top:30px"><div class="sfig" style="margin:0"><div class="shotf"><img src="/case-studies/access-controls/img-07.webp" width="1179" height="2531" loading="lazy" decoding="async"></div></div><div class="sfig" style="margin:0"><div class="shotf"><img src="/case-studies/access-controls/img-08.webp" width="1179" height="2531" loading="lazy" decoding="async"></div></div></div><div style="width:50%;margin:30px auto 0;padding:0 15px"><div class="shotf"><img src="/case-studies/access-controls/img-09.webp" width="1299" height="2531" loading="lazy" decoding="async"></div></div><div class="cap" style="text-align:center;margin-top:18px">The refined slider in its three states.</div></div>
+  </div>
+
+  <div style="margin-top:64px">
+    <div class="label">Why this one</div>
+    <h3 style="font-size:34px;margin-bottom:26px">The three concepts, side by side.</h3>
+    <div class="card on2" style="padding:26px 12px 8px">
+    <table class="m">
+      <tr><th style="width:170px"></th><th>Easy to discover</th><th>Simple to manage</th><th>Quiet</th></tr>
+      <tr><td class="n">01 Floating icon</td>
+        <td><span class="pill we">Weak</span><br>Permissions not immediately evident</td>
+        <td><span class="pill pa">Partial</span><br>Full settings were an extra step</td>
+        <td><span class="pill we">Weak</span><br>Icon competed with the chat</td></tr>
+      <tr><td class="n">02 Icon pills</td>
+        <td><span class="pill st">Strong</span><br>Visible at a glance</td>
+        <td><span class="pill pa">Partial</span><br>One tap each, but crowds as permissions grow</td>
+        <td><span class="pill we">Weak</span><br>Persistent, with no way to hide it</td></tr>
+      <tr><td class="n">03 Slider</td>
+        <td><span class="pill pa">Partial</span><br>Needed a cue to be found (see testing)</td>
+        <td><span class="pill st">Strong</span><br>Overview and toggles in one control</td>
+        <td><span class="pill st">Strong</span><br>Closed by default, opens on demand</td></tr>
+    </table></div>
+    <p class="cap">My qualitative read of each concept against the three goals. Not a scored test.</p>
+    <p class="body" style="margin-top:22px;max-width:1040px;color:var(--sub);font-size:18px">The slider was the only concept that stayed quiet and still had room to grow. It gave up some discoverability to get there, which turned out to be the thing to fix next.</p>
+  </div>
+</section>
+
+<!-- INTERACTION MODEL -->
+<section class="band b2">
+  <div class="eyebrow">06 / Interaction model</div>
+  <h2>One control, every combination.</h2>
+  <p class="lead">A row of icons only works if it reads correctly whatever the mix. Enabled permissions keep their colour; disabled ones turn grey with a stroke through them. I designed for the three states that matter.</p>
+  <div style="margin-top:44px"><div class="card on1" style="padding:34px 40px 34px;margin-top:30px"><h3 style="font-size:28px">All permissions enabled</h3><p style="font-size:17px;line-height:1.5;color:var(--sub);margin-bottom:26px">Every icon is in colour. The contact has the full set.</p><div class="shotf" style="width:100%"><img src="/case-studies/access-controls/img-10.webp" width="2400" height="2166" loading="lazy" decoding="async"></div></div><div class="card on1" style="padding:34px 40px 34px;margin-top:30px"><h3 style="font-size:28px">All permissions disabled</h3><p style="font-size:17px;line-height:1.5;color:var(--sub);margin-bottom:26px">Every icon is grey and struck through. No optional permissions are on.</p><div class="shotf" style="width:100%"><img src="/case-studies/access-controls/img-11.webp" width="2400" height="2149" loading="lazy" decoding="async"></div></div><div class="card on1" style="padding:34px 40px 34px;margin-top:30px"><h3 style="font-size:28px">A mix of permissions</h3><p style="font-size:17px;line-height:1.5;color:var(--sub);margin-bottom:26px">Colour and grey sit side by side, so each permission reads and changes independently.</p><div class="shotf" style="width:100%"><img src="/case-studies/access-controls/img-12.webp" width="2400" height="2149" loading="lazy" decoding="async"></div></div></div>
+</section>
+
+<!-- TESTING -->
+<section class="band b1">
+  <div class="eyebrow">07 / Testing &amp; refinement</div>
+  <h2>The interaction still needed a cue.</h2>
+  <p class="lead">A/B testing showed that some people did not realise the slider was interactive, or why it was there. A control built to stay quiet was, for some, easy to miss. The feedback pointed to an onboarding problem: the control needed to teach its own gesture.</p>
+  <div class="twocol" style="grid-template-columns:1fr 470px;gap:50px">
+    <div class="stack">
+      <div class="grid g3" style="gap:20px">
+        <div class="card on2" style="padding:24px"><div class="label">What we saw</div><p style="font-size:16px;line-height:1.55">Some users did not understand they had to open the slider, or what it was for.</p></div>
+        <div class="card on2" style="padding:24px"><div class="label">What it meant</div><p style="font-size:16px;line-height:1.55">The gap was discoverability: knowing the control exists and what it does. Not the permissions inside it.</p></div>
+        <div class="card on2" style="padding:24px"><div class="label">What changed</div><p style="font-size:16px;line-height:1.55">Two cues, so the gesture teaches itself rather than relying on people to stumble onto it.</p></div>
+      </div>
+      <div class="sagecard" style="padding:28px 32px">
+        <div class="label s">The two cues</div>
+        <div class="crit" style="margin-top:14px"><div class="num">01</div><div><h4>First-time auto-open</h4><p>Show the slider fully open when someone starts a chat with their first connection.</p></div></div>
+        <div class="crit" style="margin-top:20px"><div class="num">02</div><div><h4>Micro-caption</h4><p>"Drag this down to edit access permissions" makes the gesture explicit, right where the hand needs to go.</p></div></div>
+      </div>
+      <div><span class="tag">Status · Planned after testing</span></div>
+    </div>
+    <div class="card on2" style="padding:26px 26px 22px"><div class="fig"><img src="/case-studies/access-controls/img-13.webp" width="2400" height="5078" loading="lazy" decoding="async" width="242" height="512" style="width:100%;height:auto;aspect-ratio:242/512;border-radius:6px"></div><div class="cap" style="margin-top:16px">Refined interaction in context. The caption names the gesture.</div></div>
+  </div>
+</section>
+
+<!-- OUTCOME -->
+<section class="band b2">
+  <div class="eyebrow">08 / Outcome</div>
+  <h2>Privacy, made practical.</h2>
+  <p class="lead">Access Controls brought contact-specific permissions into the conversation itself, pairing a quick overview with a deeper settings view, without taking people away from their chat. The reported results are in the introduction above.</p>
+  <div class="card on1" style="margin-top:44px;padding:38px 44px">
+      <div class="label s">The design principle</div>
+      <div class="serif" style="font-size:40px;line-height:1.25;font-weight:500;margin:10px 0 16px;max-width:900px">Make control available when it is needed, and quiet when it is not.</div>
+      <p style="font-size:17px;line-height:1.6;color:var(--sub);max-width:900px">The final direction balanced visibility, progressive disclosure and a low-interruption interaction, while keeping permissions close to the person and conversation they applied to.</p>
+  </div>
+
+  <h2 style="margin-top:84px;font-size:42px">What I took away.</h2>
+  <p class="lead" style="max-width:1100px">A fast, collaborative exercise in turning a complex permission model into an interaction people could understand and control. Three lessons stayed with me.</p>
+  <div class="grid g3" style="margin-top:36px">
+    <div class="card on1"><div class="num" style="color:var(--copper);margin-bottom:14px">01</div><h4 style="font-size:20px;font-weight:600;margin-bottom:8px">Privacy needs depth and restraint</h4><p style="font-size:16px;line-height:1.55;color:var(--sub)">People want fine-grained control, but only when they reach for it. The rest of the time, it should stay out of sight.</p></div>
+    <div class="card on1"><div class="num" style="color:var(--copper);margin-bottom:14px">02</div><h4 style="font-size:20px;font-weight:600;margin-bottom:8px">A hidden control must teach its gesture</h4><p style="font-size:16px;line-height:1.55;color:var(--sub)">Quiet design earns its keep only if people can still find it. Testing made that very clear, very fast.</p></div>
+    <div class="card on1"><div class="num" style="color:var(--copper);margin-bottom:14px">03</div><h4 style="font-size:20px;font-weight:600;margin-bottom:8px">Write the trade-off down early</h4><p style="font-size:16px;line-height:1.55;color:var(--sub)">Naming what each concept offered and what it cost made a 24-hour decision a comparison, not a debate.</p></div>
+  </div>
+  <div class="eyebrow c" style="margin:84px 0 0;color:var(--copper);font-size:14px">Access should feel like a choice — not an interruption.</div>
+</section>
+
+<div class="foot"><span>Port <i style="font-style:normal;margin:0 8px">/</i> Access Controls <i style="font-style:normal;margin:0 8px">/</i> July 2024</span><span>Sagarika SV. <i style="font-style:normal;margin:0 8px">/</i> Product Design</span></div>
+</div>

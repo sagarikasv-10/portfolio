@@ -74,3 +74,10 @@ Desktop shows the whole picture (slightly cropped to fit); mobile crops to a squ
 - **Night hero media slot:** set `heroNightMedia` in `src/content/site.ts` to an image or a looping muted video; it fades in over the painting in Magic Mode.
   While it is `null`, the painting gets a moonlit colour grade plus a twilight overlay.
 - All `mailto:` links are plain links (no `target="_blank"`), so mobile mail apps open reliably.
+
+## Case study pages
+
+Three native case studies live at `/work/access-controls`, `/work/devotional-landing-pages` and `/work/port-dark-mode`
+(`src/app/work/[slug]/page.tsx`). Each study's written content is `src/content/case-studies/<slug>.html`, its own styles are
+`<slug>.css` (scoped under `.cs-<slug>`), and `shared.css` holds the responsive rules. Images are in `public/case-studies/<slug>/`.
+Titles, descriptions and cover images are registered in `CASE_STUDIES` in `src/content/site.ts`; the homepage cards are `WORK.items`.

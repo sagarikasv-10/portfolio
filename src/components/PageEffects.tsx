@@ -5,14 +5,15 @@ import { initMagic } from "@/lib/magic";
 import { initActiveNav, initRail, initScrollTop } from "@/lib/pageNav";
 
 /** Floating scroll-to-top button + the behaviour that keeps the navbar underline on the visible section. */
-export function PageEffects() {
+export function PageEffects({ subpage = false }: { subpage?: boolean }) {
   useEffect(() => {
-    const a = initActiveNav();
+    // sub-pages (case studies) have no hero / sections / Magic toggle, so only the rail and scroll-to-top apply
+    const a = subpage ? () => {} : initActiveNav();
     const b = initScrollTop();
-    const c = initMagic();
+    const c = subpage ? () => {} : initMagic();
     const d = initRail();
     return () => { a(); b(); c(); d(); };
-  }, []);
+  }, [subpage]);
   return (
     <button
       type="button"

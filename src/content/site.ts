@@ -103,45 +103,67 @@ export type WorkItem = {
   image: { src: string; alt: string } | null;
 };
 
+/** Native case study pages (app/work/[slug]); copy and images live in src/content/case-studies. */
+export const CASE_STUDIES = {
+  "access-controls": {
+    crumb: "Access Controls",
+    title: "Access Controls: Designing access without friction",
+    description: "A contact-level privacy system for Port that lets people decide what each connection can do and see, designed and shipped in 24 hours.",
+    cover: "/work/cover.jpg",
+  },
+  "devotional-landing-pages": {
+    crumb: "High-Converting Devotional Landing Pages",
+    title: "Designing context before checkout: Sri Mandir curated landing pages",
+    description: "A rapid landing page experimentation system that replaced generic WhatsApp deep links with culturally grounded, personalised journeys.",
+    cover: "/work/landing-pages.webp",
+  },
+  "port-dark-mode": {
+    crumb: "Port Dark Mode",
+    title: "Port Dark Mode: how a gradient and a stroke drove 1,314% growth",
+    description: "Designing a Gen Z-ready dark theme and refined bottom-sheet components for Port Messenger.",
+    cover: "/work/port-dark-mode.webp",
+  },
+} as const;
+export type CaseSlug = keyof typeof CASE_STUDIES;
+
 export const WORK = {
   id: "work",
   title: "Selected Work",
   items: [
     {
       id: "access",
-      tag: "Privacy & Trust",
-      title: "Access Controls",
-      description: "An industry-first access control system shipped in 24 hours, driving 36% user growth and stronger retention.",
+      tag: "Privacy & Growth",
+      title: "Access Controls: Driving +36% User Growth",
+      description: "An industry-first permission system shipped in 24 hours, giving users granular control over connection privacy while lifting retention.",
       company: "Port (Numberless)",
       skill: "Product Design",
-      href: "https://drive.google.com/file/d/1NRIIzAs31tZ7c2QOPMbNk_Jq0YomIqBU/view?usp=drive_link",
+      href: "/work/access-controls",
       status: "live",
-      // Drop your cover.jpg into /public/work/ and it appears here automatically (the sketch shows until then).
       image: { src: "/work/cover.jpg", alt: "Port permission drawer, shown as a postage-stamp graphic" },
     },
 
     {
       id: "rhythms",
-      tag: "Growth & Retention",
+      tag: "Growth & Conversion",
       title: "High-Converting Devotional Landing Pages",
-      description: "Designing modular, high-intent landing experiences for Sri Mandir that drove web-to-app acquisition and were later adopted natively inside the app.",
+      description: "Modular, high-intent web experiences for Sri Mandir that accelerated web-to-app acquisition and were later adopted natively inside the app.",
       company: "AppsForBharat",
       skill: "Product Design",
-      href: "https://drive.google.com/file/d/1imGWx_ybuHcujTNtERkz6GaSWvwFiLCM/view?usp=sharing",
+      href: "/work/devotional-landing-pages",
       status: "live",
       image: { src: "/work/landing-pages.webp", alt: "Three Sri Mandir landing page screens: Pitru Paksha pujas at Gaya, the legend of Rama Ekadashi, and Navratri Pratipada pujas" },
     },
 
     {
       id: "system",
-      tag: "Design Systems",
-      title: "Chadhava Creative Design System",
-      description: "A scalable creative system with 130+ templates, supporting 132 SKUs across 22 temples.",
-      company: "AppsForBharat",
-      skill: "Design Systems",
-      href: null,
-      status: "soon",
-      image: null,
+      tag: "Visual Systems & Growth",
+      title: "Port Dark Mode: +1,314% User Growth",
+      description: "Crafting a Gen Z-ready dark theme and refined bottom-sheet components for Port Messenger, driving 3.5x daily onboarding and 46% retention.",
+      company: "Port (Numberless)",
+      skill: "Product Design",
+      href: "/work/port-dark-mode",
+      status: "live",
+      image: { src: "/work/port-dark-mode.webp", alt: "Port dark mode screens: welcome, Port QR, profile and create a new Port, with a Dark mode toggle" },
     },
   ] as WorkItem[],
 };

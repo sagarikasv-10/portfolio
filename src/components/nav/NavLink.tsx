@@ -4,9 +4,9 @@ import { ACTIVE_NAV, type NavItem } from "@/content/site";
 import { useNote } from "./useNavAction";
 
 /** Real link when href exists; otherwise a button that gently says it's coming soon. */
-export function NavLink({ item, className, children }: { item: Omit<NavItem, "icon">; className: string; children: React.ReactNode }) {
+export function NavLink({ item, className, children, activeId = ACTIVE_NAV }: { item: Omit<NavItem, "icon">; className: string; children: React.ReactNode; activeId?: NavItem["id"] }) {
   const { say } = useNote();
-  const active = item.id === ACTIVE_NAV;
+  const active = item.id === activeId;
   const common = { className, "data-nav": item.id, "aria-current": active ? ("page" as const) : undefined };
   if (item.href && (item.href.startsWith("#") || item.href.startsWith("mailto:"))) return <a href={item.href} {...common}>{children}</a>;
   if (item.href && item.external) return <a href={item.href} target="_blank" rel="noopener noreferrer" {...common}>{children}</a>;

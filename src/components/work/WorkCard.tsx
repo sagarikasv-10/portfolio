@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import type { WorkItem } from "@/content/site";
 import { Thumb } from "./Thumbs";
 
@@ -47,8 +48,16 @@ function Grain({ id }: { id: string }) {
 /** Night-mode jewel tone for each category pill. */
 const TONE: Record<WorkItem["id"], string> = { rhythms: "amber", access: "teal", system: "lavender" };
 
+const LINK_CLS = "mb-5 inline-flex items-center gap-1.5 self-start text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8C581A] hover:underline";
+
+/** Internal case study pages open in the same tab (client-side navigation); external links open a new tab. */
+const CardLink = forwardRef<HTMLAnchorElement, { href: string | null; children: React.ReactNode }>(function CardLink({ href, children }, ref) {
+  if (href && href.startsWith("/")) return <Link ref={ref} href={href} className={LINK_CLS}>{children}</Link>;
+  return <a ref={ref} href={href ?? undefined} target="_blank" rel="noopener noreferrer" className={LINK_CLS}>{children}</a>;
+});
+
 /**
- * Live card: the whole card opens the case study in a new tab (the "View case study" link is a real <a>).
+ * Live card: the whole card opens the case study page (the "View case study" link is a real anchor).
  * Soon card: COMING SOON ribbon, muted, inert (no hover, no clicks, no link).
  */
 export function WorkCard({ item }: { item: WorkItem }) {
@@ -100,15 +109,9 @@ export function WorkCard({ item }: { item: WorkItem }) {
         {soon ? (
           <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#1A1A1A]/50">Case study coming soon</p>
         ) : (
-          <a
-            ref={linkRef}
-            href={item.href ?? undefined}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mb-5 inline-flex items-center gap-1.5 self-start text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8C581A] hover:underline"
-          >
+          <CardLink ref={linkRef} href={item.href}>
             View case study <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">&rarr;</span>
-          </a>
+          </CardLink>
         )}
         <div className="mt-auto flex items-center justify-between gap-3 border-t border-[#1A1A1A]/[0.12] pt-4">
           <span className="text-xs text-[#1A1A1A]/70">

@@ -1,0 +1,94 @@
+.cs-devotional-landing-pages{--bg1:#f6f0e4;--bg2:#fbf7ed;--ink:#332921;--sub:#63594c;--copper:#b27038;--sage:#667a63;--sagebg:#dbe0cf;--rule:#c7b599;--canvas:#f2c68d;--brown:#4b352a}
+.cs-devotional-landing-pages *{box-sizing:border-box;margin:0;padding:0}
+.cs-devotional-landing-pages{background:var(--bg1);color:var(--ink);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+.cs-devotional-landing-pages .serif{font-family:var(--font-display)}
+.cs-devotional-landing-pages .page{width:100%}
+.cs-devotional-landing-pages .band{padding:84px 84px 88px;position:relative}
+.cs-devotional-landing-pages .b1{background:var(--bg1)}
+.cs-devotional-landing-pages .b2{background:var(--bg2)}
+.cs-devotional-landing-pages .eyebrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--sage);margin-bottom:16px}
+.cs-devotional-landing-pages .eyebrow.c{color:var(--copper)}
+.cs-devotional-landing-pages h1{font-family:var(--font-display);font-weight:600;font-size:70px;line-height:1.04;letter-spacing:-.015em}
+.cs-devotional-landing-pages h2{font-family:var(--font-display);font-weight:600;font-size:48px;line-height:1.1;letter-spacing:-.01em;margin-bottom:18px}
+.cs-devotional-landing-pages h3{font-family:var(--font-display);font-weight:600;font-size:26px;line-height:1.2;margin-bottom:8px}
+.cs-devotional-landing-pages .lead{font-size:21.5px;line-height:1.55;color:var(--sub);max-width:1040px}
+.cs-devotional-landing-pages p.body{font-size:17px;line-height:1.65;color:var(--ink)}
+.cs-devotional-landing-pages .label{font-size:12.5px;letter-spacing:.17em;text-transform:uppercase;font-weight:600;color:var(--copper);margin-bottom:12px}
+.cs-devotional-landing-pages .label.s{color:var(--sage)}
+.cs-devotional-landing-pages .card{border:1px solid var(--rule);border-radius:12px;padding:28px 30px}
+.cs-devotional-landing-pages .card.on1{background:var(--bg1)}
+.cs-devotional-landing-pages .card.on2{background:var(--bg2)}
+.cs-devotional-landing-pages .sagecard{background:var(--sagebg);border-radius:12px;padding:28px 30px}
+.cs-devotional-landing-pages .grid{display:grid;gap:30px}
+.cs-devotional-landing-pages .g2{grid-template-columns:1fr 1fr}
+.cs-devotional-landing-pages .g3{grid-template-columns:repeat(3,1fr)}
+.cs-devotional-landing-pages .cap{font-style:italic;font-size:14.5px;color:var(--sub);margin-top:14px;font-family:var(--font-sans)}
+.cs-devotional-landing-pages .fig img{display:block;width:100%}
+.cs-devotional-landing-pages .stat{font-family:var(--font-display);font-weight:600;font-size:64px;line-height:1;color:var(--copper);margin-bottom:14px}
+.cs-devotional-landing-pages .stat small{font-size:44px;font-weight:400}
+.cs-devotional-landing-pages .kv{display:grid;grid-template-columns:1fr 1fr;gap:26px 34px}
+.cs-devotional-landing-pages .kv .k{font-size:12px;letter-spacing:.17em;text-transform:uppercase;font-weight:600;color:var(--sage);margin-bottom:8px}
+.cs-devotional-landing-pages .kv .v{font-size:18px;line-height:1.45;font-weight:500}
+.cs-devotional-landing-pages .kv .v em{font-style:normal;font-weight:400;color:var(--sub);display:block;font-size:15.5px;margin-top:2px}
+.cs-devotional-landing-pages ul.bl{list-style:none}
+.cs-devotional-landing-pages ul.bl li{font-size:17px;line-height:1.5;padding:3px 0}
+.cs-devotional-landing-pages ul.bl li:before{content:"•";margin-right:10px}
+.cs-devotional-landing-pages .num{font-family:var(--font-display);font-size:32px;color:var(--sage);font-weight:400;line-height:1}
+.cs-devotional-landing-pages .crit{display:flex;gap:22px;align-items:flex-start}
+.cs-devotional-landing-pages .crit h4{font-size:20px;font-weight:600;margin-bottom:6px;font-family:var(--font-sans)}
+.cs-devotional-landing-pages .crit p{font-size:16px;line-height:1.55;color:var(--sub)}
+.cs-devotional-landing-pages .tag{display:inline-block;border:1px solid var(--rule);border-radius:99px;padding:9px 18px;font-size:12.5px;letter-spacing:.17em;text-transform:uppercase;font-weight:600;color:var(--sage);background:var(--bg2)}
+.cs-devotional-landing-pages table.m{width:100%;border-collapse:separate;border-spacing:0;font-size:16px}
+.cs-devotional-landing-pages table.m th{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);font-weight:600;text-align:left;padding:0 18px 14px}
+.cs-devotional-landing-pages table.m td{padding:18px;border-top:1px solid var(--rule);vertical-align:top;line-height:1.45}
+.cs-devotional-landing-pages table.m td.n{font-family:var(--font-display);font-weight:600;font-size:21px;white-space:nowrap}
+.cs-devotional-landing-pages .pill{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:99px;margin-bottom:6px}
+.cs-devotional-landing-pages .pill.st{background:var(--sagebg);color:#4d6149}
+.cs-devotional-landing-pages .pill.pa{background:#f2dfc4;color:#8a5526}
+.cs-devotional-landing-pages .pill.we{background:#ebd2c4;color:#8a3f2a}
+.cs-devotional-landing-pages .foot{display:flex;justify-content:space-between;padding:28px 76px 30px;border-top:1px solid var(--rule);font-size:12px;letter-spacing:.17em;text-transform:uppercase;font-weight:500;background:var(--bg2)}
+.cs-devotional-landing-pages .foot b{font-family:var(--font-display);font-weight:400;font-size:20px;color:var(--copper);letter-spacing:0}
+.cs-devotional-landing-pages .takes{border-left:3px solid var(--copper);padding:2px 0 2px 20px}
+.cs-devotional-landing-pages .twocol{display:grid;grid-template-columns:372px 1fr;gap:56px;align-items:start;margin-top:40px}
+.cs-devotional-landing-pages .stack>*+*{margin-top:22px}
+.cs-devotional-landing-pages .cell{padding:0 30px;border-right:1px solid var(--rule)}
+.cs-devotional-landing-pages .cell:first-child{padding-left:0}
+.cs-devotional-landing-pages .cell.last{border-right:0;padding-right:0}
+.cs-devotional-landing-pages .cell .k{font-size:12px;letter-spacing:.17em;text-transform:uppercase;font-weight:600;color:var(--sage);margin-bottom:10px}
+.cs-devotional-landing-pages .cell .v{font-size:18px;line-height:1.4;font-weight:500}
+.cs-devotional-landing-pages .cell .v em{font-style:normal;font-weight:400;color:var(--sub);display:block;font-size:15.5px;margin-top:2px}
+.cs-devotional-landing-pages .gal{display:grid;gap:22px;grid-template-columns:repeat(3,1fr);margin-top:40px}
+.cs-devotional-landing-pages .shot{background:var(--bg2);border:1px solid var(--rule);border-radius:12px;padding:14px 14px 18px;display:flex;flex-direction:column}
+.cs-devotional-landing-pages .shot .frame{background:#efe6d3;border:1px solid var(--rule);border-radius:8px;height:540px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cs-devotional-landing-pages .shot .frame.auto{height:auto;padding:26px 0;flex:1}
+.cs-devotional-landing-pages .shot img{display:block;max-width:94%;max-height:512px;width:auto;height:auto}
+.cs-devotional-landing-pages .shot .t{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--sub);text-align:center;margin-top:16px}
+.cs-devotional-landing-pages .body2{font-size:19px;line-height:1.7;max-width:1100px;color:var(--ink)}
+.cs-devotional-landing-pages .body2 a{color:var(--copper);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.cs-devotional-landing-pages .body2 b{font-weight:600}
+.cs-devotional-landing-pages .body2 i{font-style:italic}
+.cs-devotional-landing-pages .metric{font-family:var(--font-display);font-weight:600;font-size:40px;line-height:1.12;letter-spacing:-.01em;margin-bottom:26px;max-width:1272px}
+.cs-devotional-landing-pages .scell{padding:0 30px;border-right:1px solid var(--rule)}
+.cs-devotional-landing-pages .scell:first-child{padding-left:0}
+.cs-devotional-landing-pages .scell:last-child{border-right:0;padding-right:0}
+.cs-devotional-landing-pages .scell .k{font-size:12px;letter-spacing:.17em;text-transform:uppercase;font-weight:600;color:var(--sage);margin-bottom:14px}
+.cs-devotional-landing-pages .scell .big{white-space:nowrap;font-family:var(--font-display);font-weight:600;font-size:38px;line-height:1.05;color:var(--copper);margin-bottom:12px}
+.cs-devotional-landing-pages .scell p{font-size:16.5px;line-height:1.5;color:var(--sub)}
+.cs-devotional-landing-pages .pt{font-size:19px;line-height:1.7;max-width:1100px;color:var(--ink)}
+.cs-devotional-landing-pages .pt+.pt{margin-top:20px}
+.cs-devotional-landing-pages .pt a,.cs-devotional-landing-pages .bc a{color:var(--copper);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.cs-devotional-landing-pages .res{margin-top:34px;background:var(--sagebg);border-radius:12px;padding:22px 30px;font-size:19px;line-height:1.55}
+.cs-devotional-landing-pages .res b{font-size:12.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--sage);display:block;margin-bottom:8px}
+.cs-devotional-landing-pages .bc{background:var(--bg1);border:1px solid var(--rule);border-radius:12px;padding:26px 30px}
+.cs-devotional-landing-pages .bc h4{font-family:var(--font-display);font-weight:600;font-size:23px;line-height:1.25;margin-bottom:10px}
+.cs-devotional-landing-pages .bc p{font-size:16.5px;line-height:1.6;color:var(--sub)}
+.cs-devotional-landing-pages .g3c{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:36px}
+.cs-devotional-landing-pages .gal4{grid-template-columns:repeat(4,1fr)}
+.cs-devotional-landing-pages .gal2{grid-template-columns:1fr 1fr}
+.cs-devotional-landing-pages .shot .frame.m2{height:340px}
+.cs-devotional-landing-pages .mob{margin-top:34px;max-width:1100px;display:inline-block;background:var(--sagebg);border:1px solid var(--rule);border-radius:12px;padding:16px 22px;font-size:19px;line-height:1.5}
+.cs-devotional-landing-pages .mob b{color:var(--sage);letter-spacing:.14em;text-transform:uppercase;font-size:13px;margin-right:12px}
+.cs-devotional-landing-pages .snap{margin-top:44px;padding:36px 38px;background:#faf5e9}
+.cs-devotional-landing-pages .row{display:grid}
+.cs-devotional-landing-pages .row+.row{margin-top:32px;padding-top:32px;border-top:1px solid var(--rule)}
+.cs-devotional-landing-pages .scell .nm{font-size:20px;font-weight:700;margin-bottom:2px}

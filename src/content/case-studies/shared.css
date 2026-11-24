@@ -1,0 +1,68 @@
+/* Shared layout + responsive rules for the native case study pages. Each study's own stylesheet is scoped to
+   .cs-<slug>; these rules apply to all of them through the common .cs wrapper. */
+.cs { overflow-x: clip; }
+.cs img { max-width: 100%; }
+.cs .page, .cs .pg { width: 100%; overflow: visible; }
+/* fluid bands: content keeps the designed 1272px measure on wide screens, padded on small ones */
+.cs .band { padding-left: max(20px, calc((100% - 1272px) / 2)); padding-right: max(20px, calc((100% - 1272px) / 2)); }
+.cs .foot { padding-left: max(20px, calc((100% - 1272px) / 2)); padding-right: max(20px, calc((100% - 1272px) / 2)); flex-wrap: wrap; gap: 8px 24px; }
+/* on desktop the article runs full-bleed behind the rail (-ml-16), so the content keeps clear of it */
+@media (min-width: 1024px) {
+  .cs .band, .cs .foot { padding-left: max(96px, calc(64px + (100% - 64px - 1272px) / 2)); padding-right: max(24px, calc((100% - 64px - 1272px) / 2)); }
+}
+
+@media (max-width: 1100px) {
+  /* fixed-pixel two-column rows (figure + text) stack before they can overflow */
+  .cs [style*="grid-template-columns"][style*="px"] { grid-template-columns: minmax(0, 1fr) !important; }
+  /* four-up stat rows (and their divided cells) become two-up */
+  .cs .row[style*="grid-template-columns"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px 28px; }
+  .cs .scell { padding: 16px 0 !important; border-right: 0 !important; border-bottom: 1px solid var(--rule); }
+  .cs .scell .big { white-space: normal; }
+  .cs h1 { font-size: clamp(2.1rem, 5.6vw, 3.6rem) !important; }
+  .cs h2 { font-size: clamp(1.7rem, 4.2vw, 2.6rem); }
+  .cs .band { padding-top: 64px; padding-bottom: 68px; }
+}
+
+@media (max-width: 900px) {
+  /* every designed multi-column row stacks */
+  .cs [style*="grid-template-columns"]:not(.row), .cs .g2, .cs .g3, .cs .twocol, .cs .kv, .cs .grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .cs .gal, .cs .gal4, .cs .gal2, .cs .g3c, .cs .bs { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .cs .twocol { gap: 28px; }
+  /* divided cells become stacked blocks with a hairline between them */
+  .cs .cell { padding: 18px 0 !important; border-right: 0 !important; border-bottom: 1px solid var(--rule); }
+  .cs .cell.last { border-bottom: 0; }
+  .cs .shot .frame { height: auto !important; min-height: 240px; padding: 18px 0; }
+  .cs .shot img { max-height: 440px; }
+  .cs .card[style*="padding"], .cs .snap, .cs .ic, .cs .bc, .cs .sagecard[style*="padding"] { padding: 22px 20px !important; }
+  .cs table.m { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cs [style*="max-width:1"] { max-width: 100% !important; }
+  .cs .lead { font-size: 19px !important; }
+  .cs .pt, .cs .body2 { font-size: 17.5px; }
+  .cs .metric { font-size: clamp(1.45rem, 5vw, 2rem); }
+  .cs .quote .q { font-size: 24px; }
+  .cs .quote { padding: 22px 20px; }
+  .cs .sub { font-size: 30px; }
+}
+
+@media (max-width: 600px) {
+  .cs .row[style*="grid-template-columns"] { grid-template-columns: minmax(0, 1fr) !important; }
+  .cs .band { padding-top: 48px; padding-bottom: 52px; }
+  .cs h1 { font-size: clamp(1.85rem, 8vw, 2.4rem) !important; line-height: 1.1; }
+  .cs h2 { font-size: 1.6rem; }
+  .cs .gal, .cs .gal4, .cs .gal2, .cs .g3c, .cs .bs { grid-template-columns: minmax(0, 1fr) !important; }
+  .cs .stat { font-size: 52px; }
+  .cs .scell .big, .cs .ic .num { font-size: 36px; white-space: normal; }
+  .cs .grid, .cs [style*="gap:30px"] { gap: 20px !important; }
+  .cs .foot { flex-direction: column; }
+  .cs .eyebrow { letter-spacing: 0.16em; }
+  .cs .badge, .cs .tag { letter-spacing: 0.12em; }
+  .cs [style*="display:flex"][style*="gap:14px"] { flex-wrap: wrap; }
+}
+
+/* designed fixed widths (e.g. a 1000px figure) never exceed the column */
+.cs [style*="width:"] { max-width: 100% !important; }
+
+@media (max-width: 900px) {
+  /* large serif pull-quotes / design questions set at 30px+ inline */
+  .cs .serif[style*="font-size"], .cs h3[style*="font-size:3"] { font-size: clamp(1.3rem, 5.2vw, 1.9rem) !important; line-height: 1.3 !important; }
+}
