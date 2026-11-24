@@ -23,7 +23,7 @@ export type NavItem = {
 export const LINKS = {
   work: "#work",
   about: "#about",
-  resume: "https://drive.google.com/file/d/1FIdRGXW7PECBkYy0oNMZh2tJUgb1s1qR/view",
+  resume: "https://drive.google.com/file/d/1pa2YwuiZ2lUCZPVtUo4cOpbZTi5wcyPh/view?usp=sharing",
   linkedin: "https://www.linkedin.com/in/sagarikasv/",
   email: "mailto:sagarikauxd@gmail.com",
 };
