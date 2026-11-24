@@ -7,7 +7,9 @@ import { Footer } from "@/components/footer/Footer";
 import { BottomNav } from "@/components/nav/BottomNav";
 import { LeftRail } from "@/components/nav/LeftRail";
 import { NoteProvider } from "@/components/nav/useNavAction";
+import { CtaPair } from "@/components/CtaPair";
 import { PageEffects } from "@/components/PageEffects";
+import { SkipLink } from "@/components/SkipLink";
 import { CASE_STUDIES, type CaseSlug } from "@/content/site";
 import "@/content/case-studies/access-controls.css";
 import "@/content/case-studies/devotional-landing-pages.css";
@@ -41,11 +43,17 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
   const html = fs.readFileSync(path.join(process.cwd(), "src/content/case-studies", `${slug}.html`), "utf8");
   return (
     <NoteProvider>
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[70] focus:bg-paper focus:px-4 focus:py-2">Skip to content</a>
+      <SkipLink />
       <LeftRail base="/" active="work" />
       <main id="main" className="relative z-10 lg:pl-16">
         <Breadcrumb current={cs.crumb} />
-        <article className={`cs cs-${slug} lg:-ml-16`} dangerouslySetInnerHTML={{ __html: html }} />
+        {/* the wrapper (not the zoomed article) carries the full-bleed offset so the margin is not scaled */}
+        <div className="lg:-ml-16">
+          <article className={`cs cs-${slug}`} dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
+        <section aria-label="Get in touch" className="border-t border-[#7A5C32]/25 bg-paper px-5 pb-14 pt-2 lg:-ml-16 lg:pl-16">
+          <CtaPair className="mt-10 flex flex-wrap items-center justify-center gap-4" />
+        </section>
         <Footer />
       </main>
       <BottomNav base="/" active="work" />

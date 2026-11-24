@@ -6,6 +6,7 @@ import { FirstFold, HeroOverlay } from "@/components/Hero";
 import { HeroArt } from "@/components/HeroArt";
 import { Footer } from "@/components/footer/Footer";
 import { PageEffects } from "@/components/PageEffects";
+import { SkipLink } from "@/components/SkipLink";
 import { AboutSection } from "@/components/about/AboutSection";
 import { Signature } from "@/components/about/Signature";
 import { ExperienceSection } from "@/components/experience/ExperienceSection";
@@ -15,7 +16,7 @@ import { WorkSection } from "@/components/work/WorkSection";
 export default function HomePage() {
   return (
     <NoteProvider>
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[70] focus:bg-paper focus:px-4 focus:py-2">Skip to content</a>
+      <SkipLink />
       <LeftRail />
       <main id="main" className="relative z-10 lg:pl-16">
         {/* Hero: the illustration sits flush at the top; identity, eyebrow and headline overlay its top-left. */}

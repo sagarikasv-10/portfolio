@@ -1,14 +1,24 @@
 /* Shared layout + responsive rules for the native case study pages. Each study's own stylesheet is scoped to
    .cs-<slug>; these rules apply to all of them through the common .cs wrapper. */
-.cs { overflow-x: clip; }
+/* The studies were designed as 1440px pages, which reads oversized inside the site shell, so the whole article is
+   scaled to --cs-zoom (84% on desktop, a little larger on small screens where text must stay readable). */
+:root { --cs-zoom: 0.84; }
+@media (max-width: 1023px) { :root { --cs-zoom: 0.9; } }
+@media (max-width: 639px) { :root { --cs-zoom: 0.92; } }
+.cs { zoom: var(--cs-zoom); overflow-x: clip; }
+.cs-bar { max-width: calc(1272px * var(--cs-zoom) + 4rem); }
 .cs img { max-width: 100%; }
 .cs .page, .cs .pg { width: 100%; overflow: visible; }
-/* fluid bands: content keeps the designed 1272px measure on wide screens, padded on small ones */
-.cs .band { padding-left: max(20px, calc((100% - 1272px) / 2)); padding-right: max(20px, calc((100% - 1272px) / 2)); }
-.cs .foot { padding-left: max(20px, calc((100% - 1272px) / 2)); padding-right: max(20px, calc((100% - 1272px) / 2)); flex-wrap: wrap; gap: 8px 24px; }
-/* on desktop the article runs full-bleed behind the rail (-ml-16), so the content keeps clear of it */
+/* fluid bands: content keeps the designed 1272px measure on wide screens, padded on small ones.
+   Lengths are in zoomed px, so visual gutters are divided by the zoom to stay exact. */
+.cs .band, .cs .foot { padding-left: max(calc(20px / var(--cs-zoom)), calc((100% - 1272px) / 2)); padding-right: max(calc(20px / var(--cs-zoom)), calc((100% - 1272px) / 2)); }
+.cs .foot { flex-wrap: wrap; gap: 8px 24px; }
+/* on desktop the article runs full-bleed behind the rail, so the content keeps clear of it (64px rail inset + gap) */
 @media (min-width: 1024px) {
-  .cs .band, .cs .foot { padding-left: max(96px, calc(64px + (100% - 64px - 1272px) / 2)); padding-right: max(24px, calc((100% - 64px - 1272px) / 2)); }
+  .cs .band, .cs .foot {
+    padding-left: max(calc(96px / var(--cs-zoom)), calc(64px / var(--cs-zoom) + (100% - 64px / var(--cs-zoom) - 1272px) / 2));
+    padding-right: max(calc(24px / var(--cs-zoom)), calc((100% - 64px / var(--cs-zoom) - 1272px) / 2));
+  }
 }
 
 @media (max-width: 1100px) {

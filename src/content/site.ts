@@ -145,7 +145,7 @@ export const WORK = {
     {
       id: "rhythms",
       tag: "Growth & Conversion",
-      title: "High-Converting Devotional Landing Pages",
+      title: "Devotional Landing Pages: Up to 4.6x Revenue per User",
       description: "Modular, high-intent web experiences for Sri Mandir that accelerated web-to-app acquisition and were later adopted natively inside the app.",
       company: "AppsForBharat",
       skill: "Product Design",
